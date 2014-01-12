@@ -42,7 +42,7 @@ options :
         -m modules                              modules to pack separated by comma
         -s                                      strip comments and whitespaces
         -b                                      encode with base64
-        -z [no|gzdeflate|gzencode|gzcompress]   compression (use only with -b yes)
+        -z [no|gzdeflate|gzencode|gzcompress]   compression (use only with -b)
         -c [0-9]                                level of compression
         -l                                      list available modules
 ```
