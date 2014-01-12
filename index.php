@@ -253,7 +253,7 @@ else{
 		$output .= "\t-m modules\t\t\t\tmodules to pack separated by comma\n";
 		$output .= "\t-s\t\t\t\t\tstrip comments and whitespaces\n";
 		$output .= "\t-b\t\t\t\t\tencode with base64\n";
-		$output .= "\t-z [no|gzdeflate|gzencode|gzcompress]\tcompression (use only with -b yes)\n";
+		$output .= "\t-z [no|gzdeflate|gzencode|gzcompress]\tcompression (use only with -b)\n";
 		$output .= "\t-c [0-9]\t\t\t\tlevel of compression\n";
 		$output .= "\t-l\t\t\t\t\tlist available modules\n";
 
