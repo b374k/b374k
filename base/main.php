@@ -519,18 +519,18 @@ if(!function_exists('view_file')){
 
 			$content = "";
 			if($type=="code"){
-				$hl = false;
-				$hl = @ini_set('highlight.default', '#408494');
-				$hl = @ini_set('highlight.keyword','#FF7000');
-				$hl = @ini_set('highlight.string', '#EEEEEE');
-				$hl = @ini_set('highlight.html', '#aaaaaa');
-				$hl = @ini_set('highlight.comment', '#666666');
-
+				$hl_arr = array(
+							"hl_default"=> ini_get('highlight.default'),
+							"hl_keyword"=> ini_get('highlight.keyword'),
+							"hl_string"=> ini_get('highlight.string'),
+							"hl_html"=> ini_get('highlight.html'),
+							"hl_comment"=> ini_get('highlight.comment')
+							);
+				
+				
 				$content = highlight_string(read_file($file),true);
-				if($hl===false){
-					$old_color = array("0000BB", "000000", "FF8000", "DD0000", "007700");
-					$new_color = array("408494", "aaaaaa", "666666", "EEEEEE" , "FF7000");
-					$content = str_replace($old_color, $new_color, $content);
+				foreach($hl_arr as $k=>$v){
+					$content = str_replace("<font color=\"".$v."\">", "<font class='".$k."'>", $content);
 				}
 			}
 			elseif($type=="image"){
@@ -551,7 +551,6 @@ if(!function_exists('view_file')){
 
 			}
 			elseif($type=="multimedia"){
-				//$src = "data:image/png;base64,".base64_encode(read_file($file));
 				$content = "<center>
 							<video controls>
 							<source src='' type='".$mime."'>

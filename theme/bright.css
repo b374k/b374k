@@ -21,14 +21,14 @@ input:focus, select:focus, textarea:focus, button:focus{
 html, body{
 	width:100%;
 	height:100%;
-	color:#999999;
+	color:#222222;
 }
 body{
-	background:#111111;
+	background:#efefef;
 }
 a{
 	text-decoration:none;
-	color:#999999;
+	color:#222222;
 }
 a:hover{
 	cursor:pointer;
@@ -47,10 +47,10 @@ table td, table th{
 	padding:8px;
 }
 textarea, input, select{
-	background:#222222;
+	background:#e0e0e0;
 	padding:8px;
 	border-radius:8px;
-	color:#999999;
+	color:#222222;
 }
 textarea{
 	resize:vertical;
@@ -62,15 +62,15 @@ textarea{
 }
 hr{
 	margin:8px 0;
-	border-bottom:1px dashed #222222;
+	border-bottom:1px dashed #e0e0e0;
 }
 video{
 	width:50%;
-	background:#222222;
+	background:#e0e0e0;
 	border-radius:8px;
 }
 h1, h2{
-	background:#222222;
+	background:#e0e0e0;
 	border-radius:8px;
 	text-align:center;
 	padding:8px;
@@ -85,36 +85,36 @@ h1, h2{
 }
 #headerNav{
 	padding:10px 8px 6px 8px;
-	background:#111111;
+	background:#efefef;
 }
 #headerNav img{
 	margin:0 4px;
 }
 #menu{
-	background:<__COLOR__>;
+	background:#6D98A2;
 	height:26px;
 }
 #menu .menuitem{
 	padding:7px 12px 6px 12px;
 	float:left;
 	height:26px;
-	background:<__COLOR__>;
+	background:#6D98A2;
 	color:#000000;
 	font-weight:bold;
 	cursor:pointer;
 }
 #menu .menuitem:hover, #menu .menuitemSelected{
-	background:#111111;
-	color:#999999;
+	background:#efefef;
+	color:#222222;
 	border-radius:8px 8px 0 0;
 }
 #menu .menuitemSelected{
-	background:#111111;
+	background:#efefef;
 }
 #basicInfo{
 	width:100%;
 	padding:8px;
-	border-bottom:1px solid #222222;
+	border-bottom:1px solid #e0e0e0;
 }
 #content{
 	width:100%;
@@ -150,7 +150,7 @@ h1, h2{
 #ulDragNDrop{
 	padding:32px 0;
 	text-align:center;
-	background:#222222;
+	background:#e0e0e0;
 	border-radius:8px;
 }
 #form{
@@ -158,17 +158,17 @@ h1, h2{
 }
 .box{
 	min-width:50%;
-	border:1px solid #222222;
+	border:1px solid #e0e0e0;
 	padding:8px 8px 0 8px;
 	border-radius:8px;
 	position:fixed;
-	background:#111111;
+	background:#efefef;
 	opacity:1;
 	box-shadow:1px 1px 25px #150f0f;
 	opacity:0.98;
 }
 .boxtitle{
-	background:<__COLOR__>;
+	background:#6D98A2;
 	color:#000000;
 	border-radius:8px;
 	text-align:center;
@@ -183,30 +183,30 @@ h1, h2{
 }
 .boxresult{
 	padding:4px 10px 6px 10px;
-	border-top:1px solid #222222;
+	border-top:1px solid #e0e0e0;
 	margin-top:4px;
 	text-align:center;
 }
 .boxtbl{
-	border:1px solid #222222;
+	border:1px solid #e0e0e0;
 	border-radius:8px;
 	padding-bottom:8px;
 }
 .boxtbl td{
 	vertical-align:middle;
 	padding:8px 15px;
-	border-bottom:1px dashed #222222;
+	border-bottom:1px dashed #e0e0e0;
 }
 .boxtbl input, .boxtbl select{
 	width:100%;
 }
 .boxlabel{
 	text-align: center;
-	border-bottom:1px solid #222222;
+	border-bottom:1px solid #e0e0e0;
 	padding-bottom:8px;
 }
 .boxclose{
-	background:#222222;
+	background:#e0e0e0;
 	color:#ffffff;
 	padding:2px;
 	margin-right:8px;
@@ -214,18 +214,18 @@ h1, h2{
 	cursor:pointer;
 }
 .strong{
-	color:<__COLOR__>;
+	color:#007792;
 }
 .weak{
-	color:#666666;
+	color:#222222;
 }
 .button{
 	min-width:120px;
 	margin:2px 0;
 }
 .button:hover, #ulDragNDrop:hover{
-	box-shadow:1px 1px 5px #150f0f;
-	background:#333333;
+	box-shadow:1px 1px 5px #d0d0d0;
+	background:#d0d0d0;
 }
 .floatLeft{
 	float:left;
@@ -241,26 +241,26 @@ h1, h2{
 	width:100%;
 }
 .border{
-	border:1px solid #222222;
+	border:1px solid #e0e0e0;
 	border-radius:8px;
 	padding:8px;
 }
 .borderbottom{
-	border-bottom:1px dashed #222222;
+	border-bottom:1px dashed #e0e0e0;
 }
 .borderright{
-	border-right:1px dashed #222222;
+	border-right:1px dashed #e0e0e0;
 }
 .borderleft{
-	border-left:1px dashed #222222;
+	border-left:1px dashed #e0e0e0;
 }
 .hr td{
-	border-bottom:1px dashed #222222;
+	border-bottom:1px dashed #e0e0e0;
 }
 .cBox, .cBoxAll{
 	width:10px;
 	height:10px;
-	border:1px solid <__COLOR__>;
+	border:1px solid #6D98A2;
 	border-radius:5px;
 	margin:auto;
 	float:left;
@@ -268,7 +268,7 @@ h1, h2{
 	cursor:pointer;
 }
 .cBoxSelected{
-	background:<__COLOR__>;
+	background:#6D98A2;
 }
 .action, .actionfolder, .actiondot{
 	cursor:pointer;
@@ -281,16 +281,16 @@ h1, h2{
 .dataView td, .dataView th, #viewFile td{
 	vertical-align:top;
 	text-align:center;
-	border-bottom:1px dashed #222222;
+	border-bottom:1px dashed #e0e0e0;
 }
 .dataView th{
 	border-bottom:none;
 }
 .dataView tbody tr:hover{
-	background:#222222;
+	background:#e0e0e0;
 }
 .dataView th{
-	background:#222222;
+	background:#e0e0e0;
 	vertical-align:middle;
 }
 .dataView tfoot td{
@@ -324,7 +324,7 @@ h1, h2{
 }
 #viewFilecontent{
 	padding:8px;
-	border:1px solid #222222;
+	border:1px solid #e0e0e0;
 	border-radius:8px;
 }
 #terminalPrompt td{
@@ -338,4 +338,19 @@ h1, h2{
 #evalOptions, #evalArguments{
 	width:100%;
 	display:none;
+}
+.hl_default{
+	color:#408494;
+}
+.hl_keyword{
+	color:#CA6B13;
+}
+.hl_string{
+	color:#1F1506;
+}
+.hl_html{
+	color:#222222;
+}
+.hl_comment{
+	color:#FF7000;
 }
