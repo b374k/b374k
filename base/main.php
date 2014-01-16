@@ -531,6 +531,7 @@ if(!function_exists('view_file')){
 				$content = highlight_string(read_file($file),true);
 				foreach($hl_arr as $k=>$v){
 					$content = str_replace("<font color=\"".$v."\">", "<font class='".$k."'>", $content);
+					$content = str_replace("<span style=\"color: ".$v."\">", "<span class='".$k."'>", $content);
 				}
 			}
 			elseif($type=="image"){
