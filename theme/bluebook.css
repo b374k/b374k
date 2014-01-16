@@ -21,10 +21,10 @@ input:focus, select:focus, textarea:focus, button:focus{
 html, body{
 	width:100%;
 	height:100%;
-	color:#222222;
+	color:#333333;
 }
 body{
-	background:#efefef;
+	background:#ffffff;
 }
 a{
 	text-decoration:none;
@@ -47,10 +47,10 @@ table td, table th{
 	padding:8px;
 }
 textarea, input, select{
-	background:#e0e0e0;
+	background:#d8deea;
 	padding:8px;
 	border-radius:8px;
-	color:#222222;
+	color:#3b5998;
 }
 textarea{
 	resize:vertical;
@@ -62,15 +62,15 @@ textarea{
 }
 hr{
 	margin:8px 0;
-	border-bottom:1px dashed #e0e0e0;
+	border-bottom:1px dashed #e0e0f0;
 }
 video{
 	width:50%;
-	background:#e0e0e0;
+	background:#e0e0f0;
 	border-radius:8px;
 }
 h1, h2{
-	background:#e0e0e0;
+	background:#e0e0f0;
 	border-radius:8px;
 	text-align:center;
 	padding:8px;
@@ -85,36 +85,39 @@ h1, h2{
 }
 #headerNav{
 	padding:10px 8px 6px 8px;
-	background:#efefef;
+	background:#47649e;
+}
+#headerNav a{
+	color:#DEE5F5;
 }
 #headerNav img{
 	margin:0 4px;
 }
 #menu{
-	background:#6D98A2;
+	background:#d8deea;
 	height:26px;
 }
 #menu .menuitem{
 	padding:7px 12px 6px 12px;
 	float:left;
 	height:26px;
-	background:#6D98A2;
-	color:#000000;
+	background:#d8deea;
+	color:#3b5998;
 	font-weight:bold;
 	cursor:pointer;
 }
 #menu .menuitem:hover, #menu .menuitemSelected{
-	background:#efefef;
+	background:#ffffff;
 	color:#222222;
 	border-radius:8px 8px 0 0;
 }
 #menu .menuitemSelected{
-	background:#efefef;
+	background:#ffffff;
 }
 #basicInfo{
 	width:100%;
 	padding:8px;
-	border-bottom:1px solid #e0e0e0;
+	border-bottom:1px solid #e0e0f0;
 }
 #content{
 	width:100%;
@@ -150,7 +153,7 @@ h1, h2{
 #ulDragNDrop{
 	padding:32px 0;
 	text-align:center;
-	background:#e0e0e0;
+	background:#e0e0f0;
 	border-radius:8px;
 }
 #form{
@@ -158,63 +161,63 @@ h1, h2{
 }
 .box{
 	min-width:50%;
-	border:1px solid #e0e0e0;
+	border:1px solid #e0e0f0;
 	padding:8px 8px 0 8px;
 	border-radius:8px;
 	position:fixed;
-	background:#efefef;
+	background:#ffffff;
 	opacity:1;
 	box-shadow:1px 1px 25px #150f0f;
 	opacity:0.98;
 }
 .boxtitle{
-	background:#6D98A2;
-	color:#000000;
+	background:#3b5998;
+	color:#DEE5F5;
 	border-radius:8px;
 	text-align:center;
 	cursor:pointer;
 	font-weight:bold;
 }
 .boxtitle a, .boxtitle a:hover{
-	color:#000000;
+	color:#3b5998;
 }
 .boxcontent{
 	padding:2px 0 2px 0;
 }
 .boxresult{
 	padding:4px 10px 6px 10px;
-	border-top:1px solid #e0e0e0;
+	border-top:1px solid #e0e0f0;
 	margin-top:4px;
 	text-align:center;
 }
 .boxtbl{
-	border:1px solid #e0e0e0;
+	border:1px solid #e0e0f0;
 	border-radius:8px;
 	padding-bottom:8px;
 }
 .boxtbl td{
 	vertical-align:middle;
 	padding:8px 15px;
-	border-bottom:1px dashed #e0e0e0;
+	border-bottom:1px dashed #e0e0f0;
 }
 .boxtbl input, .boxtbl select{
 	width:100%;
 }
 .boxlabel{
 	text-align: center;
-	border-bottom:1px solid #e0e0e0;
+	border-bottom:1px solid #e0e0f0;
 	padding-bottom:8px;
 }
 .boxclose{
-	background:#e0e0e0;
-	color:#000000;
+	background:#d8deea;
+	color:#3b5998;
 	padding:2px;
 	margin-right:8px;
 	padding:1px 6px;
 	cursor:pointer;
 }
 .strong{
-	color:#007792;
+	color:#3b5998;
 }
 .weak{
 	color:#222222;
@@ -224,8 +227,9 @@ h1, h2{
 	margin:2px 0;
 }
 .button:hover, #ulDragNDrop:hover{
-	box-shadow:1px 1px 5px #d0d0d0;
-	background:#d0d0d0;
+	box-shadow:1px 1px 5px #ffffff;
+	background:#47649e;
+	color:#DEE5F5;
 }
 .floatLeft{
 	float:left;
@@ -241,26 +245,26 @@ h1, h2{
 	width:100%;
 }
 .border{
-	border:1px solid #e0e0e0;
+	border:1px solid #e0e0f0;
 	border-radius:8px;
 	padding:8px;
 }
 .borderbottom{
-	border-bottom:1px dashed #e0e0e0;
+	border-bottom:1px dashed #e0e0f0;
 }
 .borderright{
-	border-right:1px dashed #e0e0e0;
+	border-right:1px dashed #e0e0f0;
 }
 .borderleft{
-	border-left:1px dashed #e0e0e0;
+	border-left:1px dashed #e0e0f0;
 }
 .hr td{
-	border-bottom:1px dashed #e0e0e0;
+	border-bottom:1px dashed #e0e0f0;
 }
 .cBox, .cBoxAll{
 	width:10px;
 	height:10px;
-	border:1px solid #6D98A2;
+	border:1px solid #3b5998;
 	border-radius:5px;
 	margin:auto;
 	float:left;
@@ -268,7 +272,7 @@ h1, h2{
 	cursor:pointer;
 }
 .cBoxSelected{
-	background:#6D98A2;
+	background:#3b5998;
 }
 .action, .actionfolder, .actiondot{
 	cursor:pointer;
@@ -281,16 +285,16 @@ h1, h2{
 .dataView td, .dataView th, #viewFile td{
 	vertical-align:top;
 	text-align:center;
-	border-bottom:1px dashed #e0e0e0;
+	border-bottom:1px dashed #e0e0f0;
 }
 .dataView th{
 	border-bottom:none;
 }
 .dataView tbody tr:hover{
-	background:#e0e0e0;
+	background:#d8deea;
 }
 .dataView th{
-	background:#e0e0e0;
+	background:#d8deea;
 	vertical-align:middle;
 }
 .dataView tfoot td{
@@ -324,7 +328,7 @@ h1, h2{
 }
 #viewFilecontent{
 	padding:8px;
-	border:1px solid #e0e0e0;
+	border:1px solid #e0e0f0;
 	border-radius:8px;
 }
 #terminalPrompt td{
