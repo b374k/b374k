@@ -31,7 +31,7 @@ if(!function_exists('auth')){
 
 			if(!isset($c['pass']) || (isset($c['pass'])&&($c['pass']!=$GLOBALS['pass']))){
 				$res = "
-		<body style='background:#111111;padding:0;margin:0;'><br><p><center><noscript>You need to enable javascript</noscript></center></p>
+		<body style='background:#111111;color:#efefef;padding:0;margin:0;'><br><p><center><noscript>You need to enable javascript</noscript></center></p>
 		<script type='text/javascript'>
 		var d = document;
 		d.write(\"<br><br><form method='post'><input type='password' id='pass' name='pass' style='width:100%;outline:none;text-align:center;background:#222222;padding:4px 8px;border:0;color:#aaaaaa;box-shadow:0px 0px 6px #111111;'></form>\");
