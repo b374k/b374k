@@ -103,8 +103,8 @@ h1, h2{
 	height:26px;
 	background:#d8deea;
 	color:#3b5998;
-	font-weight:bold;
 	cursor:pointer;
+	text-shadow:1px 1px 1px #cccccc;
 }
 #menu .menuitem:hover, #menu .menuitemSelected{
 	background:#ffffff;
@@ -176,10 +176,11 @@ h1, h2{
 	border-radius:8px;
 	text-align:center;
 	cursor:pointer;
-	font-weight:bold;
+	text-shadow:1px 1px 1px #333333;
 }
 .boxtitle a, .boxtitle a:hover{
 	color:#DEE5F5;
+	text-shadow:1px 1px 1px #333333;
 }
 .boxcontent{
 	padding:2px 0 2px 0;

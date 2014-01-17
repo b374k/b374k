@@ -99,8 +99,8 @@ h1, h2{
 	float:left;
 	height:26px;
 	background:#4C6B72;
-	color:#000000;
-	font-weight:bold;
+	color:#E4D1D1;
+	text-shadow:1px 1px 1px #333333;
 	cursor:pointer;
 }
 #menu .menuitem:hover, #menu .menuitemSelected{
@@ -169,14 +169,15 @@ h1, h2{
 }
 .boxtitle{
 	background:#4C6B72;
-	color:#000000;
+	color:#E4D1D1;
 	border-radius:8px;
 	text-align:center;
 	cursor:pointer;
-	font-weight:bold;
+	text-shadow:1px 1px 1px #333333;
 }
 .boxtitle a, .boxtitle a:hover{
-	color:#000000;
+	color:#E4D1D1;
+	text-shadow:1px 1px 1px #333333;
 }
 .boxcontent{
 	padding:2px 0 2px 0;

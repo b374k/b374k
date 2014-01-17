@@ -105,7 +105,6 @@ h1, h2{
 	height:26px;
 	background:#e6e6e6;
 	color:#000000;
-	font-weight:bold;
 	cursor:pointer;
 }
 #menu .menuitem:hover, #menu .menuitemSelected{
@@ -185,7 +184,6 @@ h1, h2{
 	border-radius:8px;
 	text-align:center;
 	cursor:pointer;
-	font-weight:bold;
 }
 .boxtitle a, .boxtitle a:hover{
 	color:#000000;
