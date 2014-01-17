@@ -25,7 +25,7 @@ Features :
 Download b374k.php (default password : b374k), edit and change password and upload b374k.php to your server, password is in sha1(md5()) format. Or create your own b374k.php, explained below
 
 ## Customize :
-After finished doing editing, upload index.php, base, module and all files inside it to a server
+After finished doing editing with files, upload index.php, base, module, theme and all files inside it to a server
 
 Using Web Browser :
 
@@ -52,7 +52,7 @@ example :
 ```
 $ php -f index.php -o myShell.php -p myPassword -s -b -z gzcompress -c 9
 ```
-Don't forget to delete index.php, base, module and all files inside it after you finished. Because it is not protected with password so it can be a security threat to your server
+Don't forget to delete index.php, base, module, theme and all files inside it after you finished. Because it is not protected with password so it can be a security threat to your server
 
 ## Documentation :
 Coming soon
