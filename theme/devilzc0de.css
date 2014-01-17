@@ -72,10 +72,14 @@ video{
 }
 h1, h2{
 	background:#222222;
+	color:#e0e0e0;
 	border-radius:8px;
 	text-align:center;
 	padding:8px;
 	margin-bottom:8px;
+}
+h1 a, h2 a{
+	color:#e0e0e0;
 }
 #b374k{
 	cursor:pointer;
