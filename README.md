@@ -1,4 +1,4 @@
-# b374k shell 3.0
+# b374k shell 3.1
 This PHP Shell is a useful tool for system or web administrator to do remote management without using cpanel, connecting using ssh, ftp etc. All actions take place within a web browser
 
 Features : 
@@ -34,7 +34,7 @@ Open index.php in your browser, quick run will only run the shell. Use packer to
 Using Console :
 ```
 $ php -f index.php
-b374k shell packer 0.2
+b374k shell packer 0.3
 
 options :
         -o filename                             save as filename
