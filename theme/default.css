@@ -72,15 +72,17 @@ video{
 	border-radius:8px;
 }
 h1, h2{
-	background:#222222;
-	color:#ebebeb;
+	background:#E7E7E7;
+	border-bottom: 1px solid #cccccc;
+	color:#000000;
 	border-radius:8px;
 	text-align:center;
+	cursor:pointer;
 	padding:8px;
 	margin-bottom:8px;
 }
 h1 a, h2 a{
-	color:#ebebeb;
+	color:#000000;
 }
 pre, #viewFilecontent{
 	word-break:break-all;
@@ -107,24 +109,24 @@ pre{
 	color:#efefef;
 }
 #menu{
-	background:#418bca;
+	background:#7C94A8;
 	height:33px;
-	border-bottom:3px solid #C5DBEE;
+	border-bottom:3px solid #CCCFD1;
 }
 #menu .menuitem{
 	padding:7px 12px 6px 12px;
 	float:left;
 	height:30px;
-	background:#418bca;
+	background:#7C94A8;
 	color:#ffffff;
 	cursor:pointer;
 }
 #menu .menuitem:hover, #menu .menuitemSelected{
-	background:#317bba;
+	background:#768999;
 	color:#ffffff;
 }
 #menu .menuitemSelected{
-	background:#317bba;
+	background:#768999;
 }
 #basicInfo{
 	width:100%;
@@ -135,7 +137,6 @@ pre{
 	background:#f0f0f0;
 	height:100%;
 	padding:66px 20px 8px 20px;
-	border-radius:0 0 20px 20px;
 }
 #content .menucontent{
 	background:#f0f0f0;
@@ -160,16 +161,15 @@ pre{
 #loading{
 	width:64px;
 	height:64px;
-	background:#000000;
+	background:#7C94A8;
 	border-radius:32px 0 32px 0;
 	margin:auto;
 	vertical-align:middle;
-	box-shadow:0 0 16px #000;
 }
 #ulDragNDrop{
 	padding:32px 0;
 	text-align:center;
-	background:#418bca;
+	background:#7C94A8;
 	border-radius:8px;
 	color:#ebebeb;
 }
@@ -239,7 +239,7 @@ pre{
 	border-radius:4px;
 }
 .strong{
-	color:#418bca;
+	color:#7C94A8;
 	text-shadow:0px 0px 1px #C0DCF5;
 }
 .weak{
@@ -249,11 +249,12 @@ pre{
 	min-width:120px;
 	margin:2px 0;
 	color:#ffffff;
-	background:#418bca;
-	border-color:#357ebd;
+	background:#7C94A8;
+	border:none;
+	cursor:pointer;
 }
 .button:hover, #ulDragNDrop:hover{
-	background:#317bba;
+	background:#768999;
 }
 .floatLeft{
 	float:left;
@@ -289,7 +290,7 @@ pre{
 .cBox, .cBoxAll{
 	width:10px;
 	height:10px;
-	border:1px solid #418bca;
+	border:1px solid #7C94A8;
 	border-radius:5px;
 	margin:auto;
 	float:left;
@@ -297,7 +298,7 @@ pre{
 	cursor:pointer;
 }
 .cBoxSelected{
-	background:#418bca;
+	background:#7C94A8;
 }
 .action, .actionfolder, .actiondot{
 	cursor:pointer;
@@ -373,7 +374,7 @@ pre{
 	display:none;
 }
 .hl_default{
-	color:#BB0000;
+	color:#517797;
 }
 .hl_keyword{
 	color:#00BB00;
@@ -382,7 +383,7 @@ pre{
 	color:#000000;
 }
 .hl_html{
-	color:#2669DF;
+	color:#CE5403;
 }
 .hl_comment{
 	color:#7F9F7F;

