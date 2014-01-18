@@ -48,18 +48,23 @@ $GLOBALS['module']['eval']['js_ontabselected'] = "
 if($('#evalOutput').html()=='You can also press ctrl+enter to submit') $('#evalInput').focus();";
 $GLOBALS['module']['eval']['content'] = "
 <table class='boxtbl'>
-<tr><td colspan='4'><textarea id='evalInput' spellcheck='false'></textarea></td></tr>
-<tr>
-	<td class='colFit'><input type='button' id='evalSubmit' value='run' class='button' onclick=\"eval_go();\"></td>
-	<td style='width:120px;'>
-		<select id='evalType'>
-			<option>php</option>
-		</select>
-	</td>
-	<td><input type='text' id='evalOptions' value='Options/Switches' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\"></td>
-	<td><input type='text' id='evalArguments' value='Arguments' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\"></td>
-</tr>
-<tr><td colspan='4'><pre id='evalOutput'>You can also press ctrl+enter to submit</pre></td</tr>
+<thead>
+	<tr><th colspan='4'><p class='boxtitle'>Eval</p></th></tr>
+</thead>
+<tbody>
+	<tr><td colspan='4'><textarea id='evalInput' spellcheck='false' style='height:140px;min-height:140px;'></textarea></td></tr>
+	<tr>
+		<td class='colFit'><input type='button' id='evalSubmit' value='run' class='button' onclick=\"eval_go();\"></td>
+		<td style='width:120px;'>
+			<select id='evalType'>
+				<option>php</option>
+			</select>
+		</td>
+		<td><input type='text' id='evalOptions' value='Options/Switches' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\"></td>
+		<td><input type='text' id='evalArguments' value='Arguments' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\"></td>
+	</tr>
+	<tr><td colspan='4'><pre id='evalOutput'>You can also press ctrl+enter to submit</pre></td</tr>
+</tbody>
 </table>
 ";
 

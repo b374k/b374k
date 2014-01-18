@@ -109,7 +109,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 	}
 	else{
 	
-	$available_themes = "<tr><td>Theme</td><td><select class='theme' style='width:100px;'>";
+	$available_themes = "<tr><td>Theme</td><td><select class='theme' style='width:150px;'>";
 	foreach($GLOBALS['packer']['theme'] as $k){
 		if($k==$theme) $available_themes .= "<option selected='selected'>".$k."</option>";
 		else $available_themes .= "<option>".$k."</option>";
@@ -154,27 +154,27 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 			<tr><td>Module (separated by comma)</td><td><input type='text' id='module_to_pack' value='<?php echo implode(",", $GLOBALS['packer']['module']);?>'></td></tr>
 			<?php echo $available_themes; ?>
 			<tr><td>Strip Comments and Whitespaces</td><td>
-				<select id='strip' style='width:100px;'>
+				<select id='strip' style='width:150px;'>
 					<option selected="selected">yes</option>
 					<option>no</option>
 				</select>
 			</td></tr>
 
 			<tr><td>Base64 Encode</td><td>
-				<select id='base64' style='width:100px;'>
+				<select id='base64' style='width:150px;'>
 					<option selected="selected">yes</option>
 					<option>no</option>
 				</select>
 			</td></tr>
 
 			<tr id='compress_row'><td>Compress</td><td>
-				<select id='compress' style='width:100px;'>
+				<select id='compress' style='width:150px;'>
 					<option>no</option>
 					<option selected="selected">gzdeflate</option>
 					<option>gzencode</option>
 					<option>gzcompress</option>
 				</select>
-				<select id='compress_level' style='width:100px;'>
+				<select id='compress_level' style='width:150px;'>
 					<option>1</option>
 					<option>2</option>
 					<option>3</option>

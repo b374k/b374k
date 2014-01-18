@@ -31,10 +31,10 @@ if(!function_exists('auth')){
 
 			if(!isset($c['pass']) || (isset($c['pass'])&&($c['pass']!=$GLOBALS['pass']))){
 				$res = "
-		<body style='background:#111111;color:#efefef;padding:0;margin:0;'><br><p><center><noscript>You need to enable javascript</noscript></center></p>
+		<body style='background:#f8f8f8;color:#000000;padding:0;margin:0;'><br><p><center><noscript>You need to enable javascript</noscript></center></p>
 		<script type='text/javascript'>
 		var d = document;
-		d.write(\"<br><br><form method='post'><input type='password' id='pass' name='pass' style='width:100%;outline:none;text-align:center;background:#222222;padding:4px 8px;border:0;color:#aaaaaa;box-shadow:0px 0px 6px #111111;'></form>\");
+		d.write(\"<br><br><form method='post'><center><input type='password' id='pass' name='pass' style='font-size:15px;width:60%;outline:none;text-align:center;background:#ffffff;padding:8px;border:1px solid #cccccc;border-radius:8px;color:#000000;'></center></form>\");
 		d.getElementById('pass').focus();
 		d.getElementById('pass').setAttribute('autocomplete', 'off');
 		</script>
@@ -573,7 +573,7 @@ if(!function_exists('view_file')){
 
 
 			$output .= "
-	<table id='viewFile'>
+	<table id='viewFile' class='boxtbl'>
 	<tr><td style='width:120px;'>Filename</td><td>".html_safe($file)."</td></tr>
 	<tr><td>Size</td><td>".get_filesize($file)." (".filesize($file).")</td></tr>
 	".$owner."
@@ -582,13 +582,13 @@ if(!function_exists('view_file')){
 	<tr><td>Last modified</td><td>".@date("d-M-Y H:i:s",filemtime($file))."</td></tr>
 	<tr><td>Last accessed</td><td>".@date("d-M-Y H:i:s",fileatime($file))."</td></tr>
 	<tr data-path='".html_safe($file)."'><td colspan='2'>
-	<input type='button' class='navigate button' value='explorer'>
-	<input type='button' class='action button' value='action'>
-	<input type='button' class='button' value='raw' onclick=\"view('".html_safe(addslashes($file))."', 'raw');hide_box();\">
-	<input type='button' class='button' value='code' onclick=\"view('".html_safe(addslashes($file))."', 'code');hide_box();\">
-	<input type='button' class='button' value='hex' onclick=\"view('".html_safe(addslashes($file))."', 'hex');hide_box();\">
-	<input type='button' class='button' value='image' onclick=\"view('".html_safe(addslashes($file))."', 'image');hide_box();\">
-	<input type='button' class='button' value='multimedia' onclick=\"view('".html_safe(addslashes($file))."', 'multimedia');hide_box();\">
+	<input type='button' class='navigate button' style='width:120px;' value='explorer'>
+	<input type='button' class='action button' style='width:120px;' value='action'>
+	<input type='button' class='button' value='raw' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'raw');hide_box();\">
+	<input type='button' class='button' value='code' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'code');hide_box();\">
+	<input type='button' class='button' value='hex' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'hex');hide_box();\">
+	<input type='button' class='button' value='image' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'image');hide_box();\">
+	<input type='button' class='button' value='multimedia' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'multimedia');hide_box();\">
 	</td></tr>
 	<tr><td colspan='2'><div id='viewFilecontent'>".$content."</div></td></tr>
 	</table>";
@@ -707,7 +707,7 @@ if(!function_exists('show_all_files')){
 			}
 			$output .= "
 	<tr data-path=\"".html_safe(realpath($d).DIRECTORY_SEPARATOR)."\"><td><div class='cBox".$cboxException."'></div></td>
-	<td><a class='navigate'>[ ".html_safe($d)." ]</a><span class='".$action." floatRight'>action</a></td>
+	<td style='white-space:normal;'><a class='navigate'>[ ".html_safe($d)." ]</a><span class='".$action." floatRight'>action</a></td>
 	<td>DIR</td>";
 			foreach($cols as $k=>$v){
 				$sortable = "";
@@ -719,7 +719,7 @@ if(!function_exists('show_all_files')){
 		foreach($allfiles as $f){
 			$output .= "
 	<tr data-path=\"".html_safe(realpath($f))."\"><td><div class='cBox'></div></td>
-	<td><a class='view'>".html_safe($f)."</a><span class='action floatRight'>action</a></td>
+	<td style='white-space:normal;'><a class='view'>".html_safe($f)."</a><span class='action floatRight'>action</a></td>
 	<td title='".filesize($f)."'>".get_filesize($f)."</td>";
 			foreach($cols as $k=>$v){
 				$sortable = "";

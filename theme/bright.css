@@ -76,6 +76,13 @@ h1, h2{
 	padding:8px;
 	margin-bottom:8px;
 }
+pre, #viewFilecontent{
+	word-break:break-all;
+	word-wrap:break-word;
+}
+pre{
+	white-space:pre-wrap;	
+}
 #b374k{
 	cursor:pointer;
 }
