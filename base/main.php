@@ -61,7 +61,7 @@ if(!function_exists('get_server_info')){
 if(!function_exists('get_self')){
 	function get_self(){
 		$query = (isset($_SERVER["QUERY_STRING"])&&(!empty($_SERVER["QUERY_STRING"])))?"?".$_SERVER["QUERY_STRING"]:"";
-		return $_SERVER["REQUEST_URI"].$query;
+		return html_safe($_SERVER["REQUEST_URI"].$query);
 	}
 }
 

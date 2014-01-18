@@ -421,7 +421,7 @@ function packer_output($str){
 
 function packer_get_self(){
 	$query = (isset($_SERVER["QUERY_STRING"])&&(!empty($_SERVER["QUERY_STRING"])))?"?".$_SERVER["QUERY_STRING"]:"";
-	return $_SERVER["REQUEST_URI"].$query;
+	return packer_html_safe($_SERVER["REQUEST_URI"].$query);
 }
 
 function packer_strips($str){

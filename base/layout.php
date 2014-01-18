@@ -75,7 +75,7 @@
 	<div id='tobottom'></div>
 </div>
 <table id="overlay"><tr><td><div id="loading" ondblclick='loading_stop();'></div></td></tr></table>
-<form method='post' id='form' target='_blank'></form>
+<form action='<?php echo get_self(); ?>' method='post' id='form' target='_blank'></form>
 <!--script start-->
 <script type='text/javascript'>
 var targeturl = '<?php echo get_self(); ?>';
