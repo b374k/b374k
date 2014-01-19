@@ -2,7 +2,7 @@
 $GLOBALS['module']['convert']['id'] = "convert";
 $GLOBALS['module']['convert']['title'] = "Convert";
 $GLOBALS['module']['convert']['js_ontabselected'] = "
-if($('#decodeResult').children().length==1) $('#decodeStr').focus();";
+if((!portableMode) && ($('#decodeResult').children().length==1)) $('#decodeStr').focus();";
 $GLOBALS['module']['convert']['content'] = "
 <table class='boxtbl'>
 <thead>
@@ -10,7 +10,7 @@ $GLOBALS['module']['convert']['content'] = "
 </thead>
 <tbody>
 	<tr><td colspan='2'><textarea style='height:140px;min-height:140px;' id='decodeStr'></textarea></td></tr>
-	<tr><td colspan='2'><input type='button' class='button' value='convert' onclick='decode_go();'></td></tr>
+	<tr><td colspan='2'><span class='button' onclick='decode_go();'>convert</span></td></tr>
 </tbody>
 <tfoot id='decodeResult'><tr><td colspan='2'>You can also press ctrl+enter to submit</td></tr></tfoot>
 </table>";
@@ -61,7 +61,7 @@ if(!function_exists('decode')){
 
 if(!function_exists('decode_line')){
 	function decode_line($type, $result, $inputtype){
-		$res = "<tr><td style='width:150px;'>".$type."</td><td>";
+		$res = "<tr><td class='colFit'>".$type."</td><td>";
 		if($inputtype=='input'){
 			$res .= "<input type='text' value='".html_safe($result)."' ondblclick='this.select();'>";
 		}

@@ -136,7 +136,7 @@ if(!function_exists('info_getinfo')){
 			}
 		}
 
-		$res .= "<input type='button' class='button colSpan' onclick=\"info_refresh();\" style='margin-bottom:8px;' value='refresh'>";
+		$res .= "<span class='button colSpan' onclick=\"info_refresh();\" style='margin-bottom:8px;'>refresh</span><div style='clear:both;'></div>";
 		return $res;
 	}
 }

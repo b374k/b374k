@@ -136,7 +136,7 @@ pre{
 #content{
 	background:#f0f0f0;
 	height:100%;
-	padding:66px 20px 8px 20px;
+	padding:66px 8px 8px 8px;
 }
 #content .menucontent{
 	background:#f0f0f0;
@@ -221,7 +221,7 @@ pre{
 	padding:8px 15px;
 	border-bottom:1px dashed #dddddd;
 }
-.boxtbl input, .boxtbl select{
+.boxtbl input, .boxtbl select, .boxtbl .button{
 	width:100%;
 }
 .boxlabel{
@@ -247,10 +247,16 @@ pre{
 }
 .button{
 	min-width:120px;
-	margin:2px 0;
+	width:120px;
+	margin:2px;
 	color:#ffffff;
 	background:#7C94A8;
 	border:none;
+	padding:8px;
+	border-radius:8px;
+	display:block;
+	text-align:center;
+	float:left;
 	cursor:pointer;
 }
 .button:hover, #ulDragNDrop:hover{
@@ -294,7 +300,7 @@ pre{
 	border-radius:5px;
 	margin:auto;
 	float:left;
-	margin:2px 6px;
+	margin:3px 6px 2px 6px;
 	cursor:pointer;
 }
 .cBoxSelected{
@@ -333,6 +339,9 @@ pre{
 #xplTable tr>td:nth-child(3){
 	text-align:left;
 }
+#xplTable tr>td:nth-child(4),#xplTable tr>td:nth-child(5),#xplTable tr>td:nth-child(6){
+	text-align:center;
+}
 .dataView .col-owner{
 	width:140px;
 	min-width:140px;
@@ -369,8 +378,7 @@ pre{
 	padding:0;
 	width:100%;
 }
-#evalOptions, #evalArguments{
-	width:100%;
+#evalAdditional{
 	display:none;
 }
 .hl_default{

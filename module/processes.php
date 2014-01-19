@@ -65,7 +65,7 @@ if(!function_exists('show_processes')){
 			}
 			$colspan = count($psln)+1;
 			$colspanAll = $colspan+1;
-			$output .= "<tfoot><tr><td><div class='cBoxAll'></div></td><td colspan=".$colspan." style='text-align:left;'><input type='button' class='button' onclick='kill_selected();' value='kill selected' style='margin-right:8px;'><input type='button' class='button' onclick='show_processes();' value='refresh'><span class='psSelected'></span></td></tr></tfoot></table>";
+			$output .= "<tfoot><tr><td><div class='cBoxAll'></div></td><td colspan=".$colspan." style='text-align:left;'><span class='button' onclick='kill_selected();' style='margin-right:8px;'>kill selected</span><span class='button' onclick='show_processes();'>refresh</span><span class='psSelected'></span></td></tr></tfoot></table>";
 		}
 		return $output;
 	}

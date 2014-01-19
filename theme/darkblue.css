@@ -205,7 +205,7 @@ pre{
 	padding:8px 15px;
 	border-bottom:1px dashed #222222;
 }
-.boxtbl input, .boxtbl select{
+.boxtbl input, .boxtbl select, .boxtbl .button{
 	width:100%;
 }
 .boxlabel{
@@ -229,7 +229,16 @@ pre{
 }
 .button{
 	min-width:120px;
+	width:120px;
 	margin:2px 0;
+	background:#222222;
+	color:#999999;
+	padding:8px;
+	border-radius:8px;
+	display:block;
+	text-align:center;
+	float:left;
+	cursor:pointer;
 }
 .button:hover, #ulDragNDrop:hover{
 	box-shadow:1px 1px 5px #150f0f;
@@ -343,8 +352,7 @@ pre{
 	padding:0;
 	width:100%;
 }
-#evalOptions, #evalArguments{
-	width:100%;
+#evalAdditional{
 	display:none;
 }
 .hl_default{

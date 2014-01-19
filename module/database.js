@@ -44,7 +44,7 @@ function db_bind(){
 		}
 		else if((type=='sqlite')||(type=='sqlite3')){
 			$('.dbHostLbl').html('DB File');
-			$('.dbUserRow').hide()
+			$('.dbUserRow').hide();
 			$('.dbPassRow').hide();
 			$('.dbPortRow').hide();
 
@@ -85,7 +85,7 @@ function db_nav_bind(){
 	$('.dbTable').on('click', function(){
 		type = $('#dbType').val();
 		table = $(this).html();
-		db = $(this).parent().parent().parent().prev().html()
+		db = $(this).parent().parent().parent().prev().html();
 		db_query_tbl(type, db, table, 0, dbPageLimit);
 	});
 }
@@ -99,8 +99,8 @@ function db_connect(){
 	send_post({dbType:dbType, dbHost:dbHost, dbUser:dbUser, dbPass:dbPass, dbPort:dbPort}, function(res){
 		if(res!='error'){
 			$('#dbNav').html(res);
-			$('.dbHostRow').hide()
-			$('.dbUserRow').hide()
+			$('.dbHostRow').hide();
+			$('.dbUserRow').hide();
 			$('.dbPassRow').hide();
 			$('.dbPortRow').hide();
 			$('.dbConnectRow').hide();
@@ -113,8 +113,8 @@ function db_connect(){
 }
 
 function db_disconnect(){
-	$('.dbHostRow').show()
-	$('.dbUserRow').show()
+	$('.dbHostRow').show();
+	$('.dbUserRow').show();
 	$('.dbPassRow').show();
 	$('.dbPortRow').show();
 	$('.dbConnectRow').show();

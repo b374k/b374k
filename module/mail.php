@@ -1,24 +1,25 @@
 <?php
 $GLOBALS['module']['mail']['id'] = "mail";
 $GLOBALS['module']['mail']['title'] = "Mail";
-$GLOBALS['module']['mail']['js_ontabselected'] = "$('#mailFrom').focus();";
+$GLOBALS['module']['mail']['js_ontabselected'] = "if(!portableMode) $('#mailFrom').focus();";
 $GLOBALS['module']['mail']['content'] = "
 <table class='boxtbl'>
 <thead>
-	<tr><th colspan='3'><p class='boxtitle'>Mail</p></th></tr>
+	<tr><th colspan='2'><p class='boxtitle'>Mail</p></th></tr>
 </thead>
 <tbody id='mailTBody'>
-	<tr><td style='width:170px'>From</td><td colspan='2'><input type='text' id='mailFrom' value='' onkeydown=\"trap_enter(event, 'mail_send');\"></td></tr>
-	<tr><td>To</td><td colspan='2'><input type='text' id='mailTo' value='' onkeydown=\"trap_enter(event, 'mail_send');\"></td></tr>
-	<tr><td>Subject</td><td colspan='2'><input type='text' id='mailSubject' value='' onkeydown=\"trap_enter(event, 'mail_send');\"></td></tr>
+	<tr><td style='width:120px'>From</td><td colspan='2'><input type='text' id='mailFrom' value='' onkeydown=\"trap_enter(event, 'mail_send');\"></td></tr>
+	<tr><td>To</td><td><input type='text' id='mailTo' value='' onkeydown=\"trap_enter(event, 'mail_send');\"></td></tr>
+	<tr><td>Subject</td><td><input type='text' id='mailSubject' value='' onkeydown=\"trap_enter(event, 'mail_send');\"></td></tr>
 </tbody>
 <tfoot>
-	<tr><td colspan='3'><textarea id='mailContent' style='height:140px;min-height:140px;'></textarea></td></tr>
+	<tr><td colspan='2'><textarea id='mailContent' style='height:140px;min-height:140px;'></textarea></td></tr>
 	<tr>
-		<td><input type='button' class='button' onclick=\"mail_send();\" value='send'></td>
-		<td style='width:170px'><input type='button' class='button' onclick=\"mail_attach();\" value='attachment'></td>
-		<td id='mailResult'></td>
+		<td colspan='2'><span style='width:120px;' class='button' onclick=\"mail_send();\">send</span>
+		<span style='width:120px;' class='button' onclick=\"mail_attach();\">attachment</span>
+		</td>
 	</tr>
+	<tr><td colspan='2'><span id='mailResult'></span></td></tr>
 </tfoot>
 </table>
 ";

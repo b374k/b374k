@@ -8,26 +8,26 @@ $GLOBALS['module']['database']['content'] = "
 	<tr><th colspan='3'><p class='boxtitle'>Connect</p></th></tr>
 </thead>
 <tbody>
-	<tr class='dbHostRow'><td style='width:170px' class='dbHostLbl'>Host</td><td colspan='2'><input type='text' id='dbHost' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
+	<tr class='dbHostRow'><td style='width:120px' class='dbHostLbl'>Host</td><td colspan='2'><input type='text' id='dbHost' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
 	<tr class='dbUserRow'><td>Username</td><td colspan='2'><input type='text' id='dbUser' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
 	<tr class='dbPassRow'><td>Password</td><td colspan='2'><input type='text' id='dbPass' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
 	<tr class='dbPortRow'><td>Port (Optional)</td><td colspan='2'><input type='text' id='dbPort' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
 </tbody>
 <tfoot>
 	<tr class='dbConnectRow'>
-		<td style='width:170px;'>
+		<td style='width:120px;'>
 			<select id='dbType'>
 			</select>
 		</td>
-		<td style='width:170px;'><input type='button' class='button' onclick=\"db_connect();\" value='connect'></td>
+		<td style='width:120px;'><span class='button' onclick=\"db_connect();\">connect</span></td>
 		<td class='dbError'></td>
 	</tr>
 	<tr class='dbQueryRow' style='display:none;'>
 		<td colspan='3'><textarea id='dbQuery' style='min-height:140px;height:140px;'>You can also press ctrl+enter to submit</textarea></td>
 	</tr>
 	<tr class='dbQueryRow' style='display:none;'>
-		<td style='width:170px;'><input type='button' class='button' onclick=\"db_run();\" value='run'></td>
-		<td style='width:170px;'><input type='button' class='button' onclick=\"db_disconnect();\" value='disconnect'></td>
+		<td style='width:120px;'><span class='button' onclick=\"db_run();\">run</span></td>
+		<td style='width:120px;'><span class='button' onclick=\"db_disconnect();\">disconnect</span></td>
 		<td>Separate multiple commands with a semicolon <span class='strong'>(</span> ; <span class='strong'>)</span></td>
 	</tr>
 </tfoot>
@@ -261,8 +261,8 @@ elseif(isset($p['dbType'])&&isset($p['dbHost'])&&isset($p['dbUser'])&&isset($p['
 				else $query = "";
 
 				$pagination = "Limit <input type='text' id='dbLimit' value='".html_safe($limit)."' style='width:50px;'>
-								<input type='button' class='button' value='prev' onclick=\"db_pagination('prev');\">
-								<input type='button' class='button' value='next' onclick=\"db_pagination('next');\">
+								<span class='button' onclick=\"db_pagination('prev');\">prev</span>
+								<span class='button' onclick=\"db_pagination('next');\">next</span>
 								<input type='hidden' id='dbDB' value='".html_safe($db)."'>
 								<input type='hidden' id='dbTable' value='".html_safe($table)."'>
 								<input type='hidden' id='dbStart' value='".html_safe($start)."'>

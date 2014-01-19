@@ -9,7 +9,7 @@ function mail_send(){
 	mailContent = $('#mailContent').val();
 	mailAttachment = '';
 	if($('.mailAttachment')){
-		mailAttachment = $('.mailAttachment').map(function(){ return this.value; }).get().join('{[|b374k|]}')
+		mailAttachment = $('.mailAttachment').map(function(){ return this.value; }).get().join('{[|b374k|]}');
 	}
 
 	send_post({mailFrom:mailFrom, mailTo:mailTo, mailSubject:mailSubject, mailContent:mailContent, mailAttachment:mailAttachment}, function(res){
