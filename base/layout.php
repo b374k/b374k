@@ -1,7 +1,10 @@
 <?php
 	$error = @ob_get_contents();
-	$error_html = (!empty($error))?"<div class='phpError border'>".html_safe($error)."</div>":"";
+	$error_html = (!empty($error))?"<pre class='phpError border'>".str_replace("\n\n", "\n", html_safe($error))."</pre>":"";
 	@ob_end_clean();
+	error_reporting(0);
+	@ini_set('display_errors','0');
+
 
 ?><!doctype html>
 <html>
@@ -81,7 +84,7 @@
 var targeturl = '<?php echo get_self(); ?>';
 var module_to_load = '<?php echo implode(",", $GLOBALS['module_to_load']);?>';
 var win = <?php echo (is_win())?'true':'false';?>;
-
+var init_shell = true;
 <__ZEPTO__>
 <__JS__>
 

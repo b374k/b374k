@@ -23,68 +23,70 @@ var portableWidth = 700;
 var portableMode = null;
 
 Zepto(function($){
-	var now = new Date();
-	output("started @ "+ now.toGMTString());
-	output("cwd : "+get_cwd());
-	output("module : "+module_to_load);
+	if(init_shell){
+		var now = new Date();
+		output("started @ "+ now.toGMTString());
+		output("cwd : "+get_cwd());
+		output("module : "+module_to_load);
 
-	show_tab();
-	xpl_bind();
-	eval_init();
-	window_resize();
-	
-	xpl_update_status();
-	
-	$(window).on('resize', function(e){
-		clearTimeout(resizeTimer);
-		resizeTimer = setTimeout("window_resize()", 1000);
-	});
+		show_tab();
+		xpl_bind();
+		eval_init();
+		window_resize();
+		
+		xpl_update_status();
+		
+		$(window).on('resize', function(e){
+			clearTimeout(resizeTimer);
+			resizeTimer = setTimeout("window_resize()", 1000);
+		});
 
-	$('.menuitem').on('click', function(e){
-		selectedTab = $(this).attr('href').substr(2);
-		show_tab(selectedTab);
-	});
+		$('.menuitem').on('click', function(e){
+			selectedTab = $(this).attr('href').substr(2);
+			show_tab(selectedTab);
+		});
 
-	$('#logout').on('click', function(e){
-		var cookie = document.cookie.split(';');
-		for(var i=0; i<cookie.length; i++){
-			var entries = cookie[i], entry = entries.split("="), name = entry[0];
-			document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		$('#logout').on('click', function(e){
+			var cookie = document.cookie.split(';');
+			for(var i=0; i<cookie.length; i++){
+				var entries = cookie[i], entry = entries.split("="), name = entry[0];
+				document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+			}
+			localStorage.clear();
+			location.href = targeturl;
+		});
+
+		$('#totop').on('click', function(e){
+			$(window).scrollTop(0);
+		});
+		$('#totop').on('mouseover', function(e){
+			onScroll = true;
+			clearTimeout(scrollTimer);
+			start_scroll('top');
+		});
+		$('#totop').on('mouseout', function(e){
+			onScroll = false;
+			scrollCounter = 0;
+		});
+		$('#tobottom').on('click', function(e){
+			$(window).scrollTop($(document).height()-$(window).height());
+		});
+		$('#tobottom').on('mouseover', function(e){
+			onScroll = true;
+			clearTimeout(scrollTimer);
+			start_scroll('bottom');
+		});
+		$('#tobottom').on('mouseout', function(e){
+			onScroll = false;
+			scrollCounter = 0;
+		});
+
+		if(history.pushState){
+			window.onpopstate = function(event) { refresh_tab(); };
 		}
-		localStorage.clear();
-		location.href = targeturl;
-	});
-
-	$('#totop').on('click', function(e){
-		$(window).scrollTop(0);
-	});
-	$('#totop').on('mouseover', function(e){
-		onScroll = true;
-		clearTimeout(scrollTimer);
-		start_scroll('top');
-	});
-	$('#totop').on('mouseout', function(e){
-		onScroll = false;
-		scrollCounter = 0;
-	});
-	$('#tobottom').on('click', function(e){
-		$(window).scrollTop($(document).height()-$(window).height());
-	});
-	$('#tobottom').on('mouseover', function(e){
-		onScroll = true;
-		clearTimeout(scrollTimer);
-		start_scroll('bottom');
-	});
-	$('#tobottom').on('mouseout', function(e){
-		onScroll = false;
-		scrollCounter = 0;
-	});
-
-	if(history.pushState){
-		window.onpopstate = function(event) { refresh_tab(); };
-	}
-	else{
-		window.historyEvent = function(event) {	refresh_tab(); };
+		else{
+			window.historyEvent = function(event) {	refresh_tab(); };
+		}
 	}
 });
 
