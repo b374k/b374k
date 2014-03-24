@@ -799,7 +799,7 @@ function eval_init(){
 }
 
 function eval_bind(){
-	if(evalSupported!=''){
+	if((evalSupported!=null)&&(evalSupported!='')){
 		splits = evalSupported.split(",");
 		$.each(splits, function(i, k){
 			$('#evalType').append("<option>"+k+"</option>");

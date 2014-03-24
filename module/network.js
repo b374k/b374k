@@ -4,7 +4,7 @@ Zepto(function($){
 });
 
 function rs_init(){
-	if(evalReady&&(evalSupported!=null)){
+	if(evalReady&&(evalSupported!=null)&&(evalSupported!='')){
 		splits = evalSupported.split(",");
 		$.each(splits, function(i, k){
 			$('.rsType').append("<option>"+k+"</option>");

