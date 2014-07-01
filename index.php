@@ -389,16 +389,14 @@ function packer_read_file($file){
 
 function packer_write_file($file, $content){
 	if($fh = @fopen($file, "wb")){
-		if(fwrite($fh, $content)!==false)
-		{
-			if (file_exists($file.".zip")) { unlink ($file.".zip"); } //Delete Zip if its exists. Stop any file corruption
+		if(fwrite($fh, $content)!==false){
+			if(!class_exists("ZipArchive")) return true;
+			
+			if(file_exists($file.".zip")) unlink ($file.".zip");
 			$zip = new ZipArchive();
 			$filename = "./".$file.".zip";
 
-			if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
-			    exit("cannot open <$filename>\n");
-			}
-
+			if($zip->open($filename, ZipArchive::CREATE)!==TRUE) return false;
 			$zip->addFile($file);
 			$zip->close();
 			return true;
