@@ -60,7 +60,7 @@ $GLOBALS['module']['eval']['content'] = "
 	</td></tr>
 	
 	<tr>
-		<td style='width:120px;'>
+		<td style='width:144px;'>
 			<select id='evalType'>
 				
 			</select>
@@ -168,8 +168,9 @@ elseif(isset($p['findType'])){
 	$findContent = trim($p['findContent']);
 	$findContentRegex = trim($p['findContentRegex']);
 	$findContentInsensitive = trim($p['findContentInsensitive']);
-	$findWritable = trim($p['findWritable']);
 	$findReadable = trim($p['findReadable']);
+	$findWritable = trim($p['findWritable']);
+	$findExecutable = trim($p['findExecutable']);
 
 	$candidate = get_all_files($findPath);
 	if($findType=='file') $candidate = array_filter($candidate, "is_file");
@@ -226,11 +227,14 @@ elseif(isset($p['findType'])){
 	}
 
 	foreach($candidate as $k){
+		if($findReadable=="true"){
+			if(!is_readable($k)) $candidate = array_diff($candidate, array($k));
+		}
 		if($findWritable=="true"){
 			if(!is_writable($k)) $candidate = array_diff($candidate, array($k));
 		}
-		if($findReadable=="true"){
-			if(!is_readable($k)) $candidate = array_diff($candidate, array($k));
+		if($findExecutable=="true"){
+			if(!is_executable($k)) $candidate = array_diff($candidate, array($k));
 		}
 	}
 

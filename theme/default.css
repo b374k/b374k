@@ -146,10 +146,6 @@ pre{
 	overflow-x:auto;
 	overflow-y:hidden;
 }
-#logout{
-	float:right;
-	padding:0 8px 0 0;
-}
 #overlay{
 	position:fixed;
 	top:0px;
@@ -231,12 +227,12 @@ pre{
 }
 .boxclose{
 	background:#222222;
-	color:#ffffff;
-	padding:2px;
+	border-radius:3px;
 	margin-right:8px;
-	padding:1px 6px;
+	margin-top:-3px;
+	padding:2px 8px;
 	cursor:pointer;
-	border-radius:4px;
+	color:#ffffff;
 }
 .strong{
 	color:#7C94A8;

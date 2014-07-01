@@ -92,7 +92,7 @@ pre{
 }
 #headerNav{
 	padding:10px 8px 6px 8px;
-	background:#efefef;
+	background:#DBD9D9;
 }
 #headerNav img{
 	margin:0 4px;
@@ -131,10 +131,6 @@ pre{
 	clear:both;
 	display:none;
 	padding:8px;
-}
-#logout{
-	float:right;
-	padding:0 8px 0 0;
 }
 #overlay{
 	position:fixed;
@@ -211,11 +207,11 @@ pre{
 	padding-bottom:8px;
 }
 .boxclose{
-	background:#e0e0e0;
-	color:#000000;
-	padding:2px;
+	background:#E2E8F5;
+	border-radius:3px;
 	margin-right:8px;
-	padding:1px 6px;
+	margin-top:-2px;
+	padding:2px 8px;
 	cursor:pointer;
 }
 .strong{

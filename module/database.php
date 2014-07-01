@@ -8,14 +8,14 @@ $GLOBALS['module']['database']['content'] = "
 	<tr><th colspan='3'><p class='boxtitle'>Connect</p></th></tr>
 </thead>
 <tbody>
-	<tr class='dbHostRow'><td style='width:120px' class='dbHostLbl'>Host</td><td colspan='2'><input type='text' id='dbHost' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
+	<tr class='dbHostRow'><td style='width:144px' class='dbHostLbl'>Host</td><td colspan='2'><input type='text' id='dbHost' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
 	<tr class='dbUserRow'><td>Username</td><td colspan='2'><input type='text' id='dbUser' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
 	<tr class='dbPassRow'><td>Password</td><td colspan='2'><input type='text' id='dbPass' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
 	<tr class='dbPortRow'><td>Port (Optional)</td><td colspan='2'><input type='text' id='dbPort' value='' onkeydown=\"trap_enter(event, 'db_connect');\"></td></tr>
 </tbody>
 <tfoot>
 	<tr class='dbConnectRow'>
-		<td style='width:120px;'>
+		<td style='width:144px;'>
 			<select id='dbType'>
 			</select>
 		</td>

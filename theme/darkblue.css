@@ -133,10 +133,6 @@ pre{
 	display:none;
 	padding:8px;
 }
-#logout{
-	float:right;
-	padding:0 8px 0 0;
-}
 #overlay{
 	position:fixed;
 	top:0px;
@@ -215,10 +211,10 @@ pre{
 }
 .boxclose{
 	background:#222222;
-	color:#ffffff;
-	padding:2px;
+	border-radius:3px;
 	margin-right:8px;
-	padding:1px 6px;
+	margin-top:-2px;
+	padding:2px 8px;
 	cursor:pointer;
 }
 .strong{

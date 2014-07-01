@@ -32,6 +32,7 @@ Zepto(function($){
 		show_tab();
 		xpl_bind();
 		eval_init();
+		
 		window_resize();
 		
 		xpl_update_status();
@@ -50,7 +51,7 @@ Zepto(function($){
 			var cookie = document.cookie.split(';');
 			for(var i=0; i<cookie.length; i++){
 				var entries = cookie[i], entry = entries.split("="), name = entry[0];
-				document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+				document.cookie = name + "=''; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/";
 			}
 			localStorage.clear();
 			location.href = targeturl;
@@ -80,6 +81,38 @@ Zepto(function($){
 			onScroll = false;
 			scrollCounter = 0;
 		});
+		$('#basicInfo').on('mouseenter', function(e){
+			$('#toggleBasicInfo').show();
+		});
+		$('#basicInfo').on('mouseleave', function(e){
+			$('#toggleBasicInfo').hide();
+		});
+		$('#toggleBasicInfo').on('click', function(e){
+			$('#basicInfo').hide();
+			$('#showinfo').show();
+			$('#toggleBasicInfo').hide();
+			localStorage.setItem('infoBarShown', 'hidden');
+		});
+		$('#showinfo').on('click', function(e){
+			$('#basicInfo').show();
+			$('#showinfo').hide();
+			localStorage.setItem('infoBarShown', 'shown');
+		});
+		
+		if((infoBarShown = localStorage.getItem('infoBarShown'))){
+			if(infoBarShown=='shown'){
+				$('#basicInfo').show();
+				$('#showinfo').hide();
+			}
+			else{
+				$('#basicInfo').hide();
+				$('#showinfo').show();
+				$('#toggleBasicInfo').hide();
+			}
+		}
+		else{
+			info_refresh();
+		}
 
 		if(history.pushState){
 			window.onpopstate = function(event) { refresh_tab(); };
@@ -112,8 +145,10 @@ function layout_portable(){
 
 	//nav.hide();
 	nav.prependTo('#content');
-	nav.css('padding-top','5px');
+	nav.css('padding','5px 8px');
+	nav.css('margin-top', '8px');
 	nav.css('display','block');
+	nav.addClass('border');
 	
 	menu.children().css('width', '100%');
 	menu.hide();
@@ -149,8 +184,10 @@ function layout_normal(){
 	content = $('#content');
 
 	nav.insertAfter('#b374k');
-	nav.css('padding-top','0px');
+	nav.css('padding','0');
+	nav.css('margin-top', '0');
 	nav.css('display','inline');
+	nav.removeClass('border');
 	
 	menu.children().css('width', 'auto');
 	menu.show();
