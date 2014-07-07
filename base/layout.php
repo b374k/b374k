@@ -4,16 +4,14 @@
 	@ob_end_clean();
 	error_reporting(0);
 	@ini_set('display_errors','0');
-
-
-?><!doctype html>
+?>
+<!doctype html>
 <html>
 <head>
 <title><?php echo $GLOBALS['title']." ".$GLOBALS['ver'];?></title>
 <meta charset='utf-8'>
-<meta name='robots' content='noindex, nofollow, noarchive'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, user-scalable=0">
-<link rel='SHORTCUT ICON' href='<?php echo get_resource('b374k');?>'>
+<link rel='shortcut icon' href='<?php echo get_resource('b374k');?>'>
 <style type="text/css">
 <__CSS__>
 #navigation{position:fixed;left:-16px;top:46%;}
@@ -102,4 +100,5 @@ var init_shell = true;
 </script>
 <!--script end-->
 </body>
-</html><?php die();?>
+</html>
+<?php die();?>

