@@ -50,7 +50,7 @@ options :
 ```
 example :
 ```
-$ php -f index.php -o myShell.php -p myPassword -s -b -z gzcompress -c 9
+$ php -f index.php -- -o myShell.php -p myPassword -s -b -z gzcompress -c 9
 ```
 Don't forget to delete index.php, base, module, theme and all files inside it after you finished. Because it is not protected with password so it can be a security threat to your server
 
