@@ -2,7 +2,7 @@
 /*
 	b374k shell
 	Jayalah Indonesiaku
-	(c)2014
+	(c)2016
 	https://github.com/b374k/b374k
 
 */
