@@ -24,6 +24,7 @@
 #tobottom{-webkit-transform:scaleY(-1);-moz-transform:scaleY(-1);-o-transform:scaleY(-1);transform:scaleY(-1);filter:FlipV;-ms-filter:"FlipV";}
 #showinfo{float:right;display:none;}
 #logout{float:right;}
+.git_alert{font-weight: bold; color:#ef793e; font-size: 16px;}
 </style>
 </head>
 <body>
@@ -63,6 +64,11 @@
 			echo $error_html;
 			foreach(get_server_info() as $k=>$v){
 				echo "<div>".$v."</div>";
+			}
+
+			if(is_git_repo(getcwd())){
+				echo "<p class=\"git_alert\">Warning: b374k is running under a git repository!</p>
+					  <a href=\"#\"> Click here to hide b374k from git </a>";
 			}
 			?>
 		</div>
