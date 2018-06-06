@@ -985,4 +985,24 @@ if(!function_exists('output')){
 		die();
 	}
 }
+
+
+if(!function_exists('is_git_repo')){
+	function is_git_repo(){
+		return boolval( find_git_repo(getcwd().DIRECTORY_SEPARATOR.".git") );
+	}
+}
+
+if(!function_exists('find_git_repo')){
+	function find_git_repo($path){
+		if(dirname($path) == DIRECTORY_SEPARATOR){
+			return false;
+		}else if(is_dir(dirname($path).DIRECTORY_SEPARATOR.".git")){
+			return dirname($path).DIRECTORY_SEPARATOR.".git";
+		}else{
+			return find_git_repo(dirname($path));
+		}
+	}
+}
+
 ?>
