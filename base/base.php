@@ -53,23 +53,23 @@ $GLOBALS['module']['eval']['content'] = "
 </thead>
 <tbody>
 	<tr><td colspan='4'><textarea id='evalInput' spellcheck='false' style='height:140px;min-height:140px;'></textarea></td></tr>
-	
+
 	<tr id='evalAdditional'><td colspan='4'>
 		<input type='text' id='evalOptions' value='Options/Switches' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\">
 		<input type='text' id='evalArguments' value='Arguments' spellcheck='false' onkeydown=\"trap_enter(event, 'eval_go');\">
 	</td></tr>
-	
+
 	<tr>
 		<td style='width:144px;'>
 			<select id='evalType'>
-				
+
 			</select>
 		</td>
 		<td colspan='3'>
-			<span id='evalSubmit' style='width:120px;' class='button' onclick=\"eval_go();\">run</span>	
+			<span id='evalSubmit' style='width:120px;' class='button' onclick=\"eval_go();\">run</span>
 		</td>
 	</tr>
-	
+
 	<tr><td colspan='4'><pre id='evalOutput'>You can also press ctrl+enter to submit</pre></td</tr>
 </tbody>
 </table>

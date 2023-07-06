@@ -1,7 +1,7 @@
 # b374k shell 3.2
 This PHP Shell is a useful tool for system or web administrator to do remote management without using cpanel, connecting using ssh, ftp etc. All actions take place within a web browser
 
-Features : 
+Features :
  * File manager (view, edit, rename, delete, upload, download, archiver, etc)
  * Search file, file content, folder (also using regex)
  * Command execution
@@ -20,7 +20,7 @@ Features :
  * PHP version > 4.3.3 and PHP 5
  * As it using zepto.js v1.1.2, you need modern browser to use b374k shell. See browser support on zepto.js website http://zeptojs.com/
  * Responsibility of what you do with this shell
- 
+
 ## Installation :
 Download b374k.php (default password : b374k), edit and change password and upload b374k.php to your server, password is in sha1(md5()) format. Or create your own b374k.php, explained below
 
